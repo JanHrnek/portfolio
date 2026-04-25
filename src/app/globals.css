@@ -114,3 +114,44 @@ h5,
 h6 {
   font-family: var(--font-heading);
 }
+
+/* ─── Grain texture overlay ──────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+/* ─── Gradient mesh keyframes (hero background) ──────────── */
+@keyframes mesh-1 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(4%, -3%) scale(1.06); }
+  66%       { transform: translate(-3%, 4%) scale(0.96); }
+}
+@keyframes mesh-2 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(-5%, 3%) scale(1.04); }
+  66%       { transform: translate(4%, -2%) scale(1.08); }
+}
+@keyframes mesh-3 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  50%       { transform: translate(3%, 5%) scale(0.94); }
+}
+
+/* ─── Typewriter cursor blink ────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}

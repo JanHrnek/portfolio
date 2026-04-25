@@ -47,23 +47,59 @@ export default function Footer() {
   return (
     <footer
       id="kontakt"
-      className="py-8 px-6 lg:px-16"
+      className="px-6 lg:px-16 pt-16 pb-10"
       style={{ borderTop: "1px solid var(--color-border)" }}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <p className="text-sm" style={{ color: "var(--color-muted)" }}>
-          © 2026 Jan Hrnek
-        </p>
-        <div className="flex items-center gap-5">
-          <SocialLink href="https://github.com" label="GitHub">
-            <IconGitHub />
-          </SocialLink>
-          <SocialLink href="https://linkedin.com" label="LinkedIn">
-            <IconLinkedIn />
-          </SocialLink>
-          <SocialLink href="mailto:jan@hrnek.dev" label="Email">
-            <Mail size={18} strokeWidth={1.5} />
-          </SocialLink>
+      <div className="max-w-7xl mx-auto">
+        {/* CTA */}
+        <div className="mb-12">
+          <p
+            className="text-xs uppercase tracking-[0.1em] mb-4 font-heading"
+            style={{ color: "var(--color-subtle)" }}
+          >
+            Spolupráce
+          </p>
+          <p
+            className="font-heading font-medium mb-4"
+            style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "var(--color-text)", lineHeight: 1.15 }}
+          >
+            Máte projekt?
+            <br />
+            Pojďme si promluvit.
+          </p>
+          <a
+            href="mailto:jan@hrnek.dev"
+            className="inline-block font-heading font-medium transition-colors duration-200"
+            style={{
+              fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
+              color: "var(--color-accent)",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
+          >
+            jan@hrnek.dev →
+          </a>
+        </div>
+
+        {/* Bottom row */}
+        <div
+          className="flex items-center justify-between pt-8"
+          style={{ borderTop: "1px solid var(--color-border)" }}
+        >
+          <p className="text-sm" style={{ color: "var(--color-muted)" }}>
+            © 2026 Jan Hrnek
+          </p>
+          <div className="flex items-center gap-5">
+            <SocialLink href="https://github.com" label="GitHub">
+              <IconGitHub />
+            </SocialLink>
+            <SocialLink href="https://linkedin.com" label="LinkedIn">
+              <IconLinkedIn />
+            </SocialLink>
+            <SocialLink href="mailto:jan@hrnek.dev" label="Email">
+              <Mail size={18} strokeWidth={1.5} />
+            </SocialLink>
+          </div>
         </div>
       </div>
     </footer>
