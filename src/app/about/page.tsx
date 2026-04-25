@@ -10,46 +10,67 @@ import { spring } from "@/lib/animation"
 
 const timeline = [
   {
-    year: "2022",
+    year: "2020",
     title: "Nástup na VUT FSI Brno",
-    description:
-      "Obor Konstrukční inženýrství — základ v mechanice, materiálech a CAD modelování.",
+    description: "Obor Konstrukční inženýrství — základ v mechanice, materiálech a CAD modelování.",
     upcoming: false,
+    photo: undefined as string | undefined,
   },
   {
     year: "2023",
     title: "CSWA & CSWP certifikace",
-    description:
-      "SolidWorks certifikace na asociátské i profesionální úrovni. Začátek freelancingu v CAD oblasti.",
+    description: "SolidWorks certifikace na asociátské i profesionální úrovni. Začátek freelancingu v CAD oblasti.",
     upcoming: false,
+    photo: undefined as string | undefined,
   },
   {
     year: "2024",
     title: "Solidcon",
-    description:
-      "Technická dokumentace, KLT inserty a paletový design. První zkušenost s průmyslovým projektem pod časovým tlakem.",
+    description: "Technická dokumentace, KLT inserty a paletový design. První průmyslový projekt pod časovým tlakem.",
     upcoming: false,
+    photo: undefined as string | undefined,
+  },
+  {
+    year: "2024",
+    title: "AxisCore projekt",
+    description: "DIY 3-osý kamerový gimbal — první velký samostatný hardware projekt. Projekt selhal, ale naučil nejvíc.",
+    upcoming: false,
+    photo: undefined as string | undefined,
   },
   {
     year: "2025",
-    title: "AxisCore projekt",
-    description:
-      "DIY 3-osý kamerový gimbal — první velký samostatný hardware projekt. Mechanika, elektronika, firmware. Projekt selhal, ale naučil nejvíc.",
+    title: "MediaMix",
+    description: "Komerční projekt — návrh formy pro polyuretanové výrobky a automatizovaný aplikátor separátoru.",
     upcoming: false,
+    photo: undefined as string | undefined,
+  },
+  {
+    year: "2025",
+    title: "ZP8 Elevator Brake",
+    description: "Týmový projekt VUT — bezpečnostní brzdný systém výtahu s ESP32, PDR a CDR fázemi.",
+    upcoming: false,
+    photo: undefined as string | undefined,
   },
   {
     year: "2026",
     title: "Lemmacon s.r.o.",
-    description:
-      "Automatizace výkaznictví, SolidWorks integrace, Excel/VBA systémy pro průmyslové prostředí.",
+    description: "Automatizace výkaznictví, SolidWorks integrace, Excel/VBA systémy pro průmyslové prostředí.",
     upcoming: false,
+    photo: undefined as string | undefined,
   },
   {
     year: "2026",
     title: "Erasmus+ SDU Odense",
-    description:
-      "Plánovaný zimní semestr na University of Southern Denmark. Strojní inženýrství v mezinárodním prostředí.",
+    description: "Plánovaný zimní semestr na University of Southern Denmark v Dánsku.",
     upcoming: true,
+    photo: undefined as string | undefined,
+  },
+  {
+    year: "2026",
+    title: "Bakalářská práce",
+    description: "Samonavíjecí a napínací systém volejbalové sítě — mechanika, ESP32, 3D tisknutý demonstrátor.",
+    upcoming: true,
+    photo: undefined as string | undefined,
   },
 ]
 
@@ -70,6 +91,14 @@ const skillCategories = [
     name: "Ostatní",
     items: ["Git", "LaTeX", "Technická dokumentace"],
   },
+]
+
+const hobbies = [
+  "Volejbal",
+  "Sushi",
+  "Italská kuchyně",
+  "Cities: Skylines",
+  "Minecraft",
 ]
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -97,12 +126,14 @@ function FadeIn({
 
 // ── Timeline item ─────────────────────────────────────────────
 
+type TimelineEntry = (typeof timeline)[number]
+
 function TimelineItem({
   item,
   index,
   isLast,
 }: {
-  item: (typeof timeline)[number]
+  item: TimelineEntry
   index: number
   isLast: boolean
 }) {
@@ -114,12 +145,12 @@ function TimelineItem({
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ ...spring.gentle, delay: index * 0.08 }}
+      transition={{ ...spring.gentle, delay: index * 0.07 }}
       className="flex gap-0"
     >
-      {/* Year column */}
+      {/* Year */}
       <div
-        className="shrink-0 w-16 lg:w-24 pt-0.5 text-right pr-6"
+        className="shrink-0 w-14 lg:w-20 pt-0.5 text-right pr-5"
         style={{ color: "var(--color-subtle)" }}
       >
         <span className="text-sm font-heading tabular-nums">{item.year}</span>
@@ -128,7 +159,7 @@ function TimelineItem({
       {/* Dot + vertical line */}
       <div className="relative shrink-0 flex flex-col items-center">
         <div
-          className="w-2.5 h-2.5 rounded-full mt-1 z-10 shrink-0"
+          className="w-2.5 h-2.5 rounded-full mt-1 z-10 shrink-0 transition-colors"
           style={{
             backgroundColor: item.upcoming
               ? "var(--color-accent)"
@@ -147,10 +178,10 @@ function TimelineItem({
       </div>
 
       {/* Content */}
-      <div className="flex-1 pl-6 pb-12">
+      <div className="flex-1 pl-5 pb-10">
         <div className="flex flex-wrap items-center gap-3 mb-1.5">
           <h3
-            className="font-heading font-medium text-lg"
+            className="font-heading font-medium text-base"
             style={{ color: "var(--color-text)" }}
           >
             {item.title}
@@ -173,6 +204,17 @@ function TimelineItem({
         >
           {item.description}
         </p>
+        {/* Photo slot — renders image when path provided */}
+        {item.photo && (
+          <div className="mt-4 overflow-hidden rounded-md" style={{ maxWidth: 280 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.photo}
+              alt={item.title}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+        )}
       </div>
     </motion.div>
   )
@@ -180,20 +222,14 @@ function TimelineItem({
 
 // ── Skill card ────────────────────────────────────────────────
 
-function SkillCard({
-  skill,
-  delay,
-}: {
-  skill: string
-  delay: number
-}) {
+function SkillCard({ skill, delay }: { skill: string; delay: number }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-60px" })
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ ...spring.gentle, delay }}
       className="py-3 px-4 text-sm font-heading"
@@ -219,8 +255,9 @@ export default function AboutPage() {
       <Navbar />
 
       <main>
+
         {/* ── 1. HERO ─────────────────────────────────────── */}
-        <section className="min-h-[60vh] flex flex-col justify-end pt-32 pb-16 px-6 lg:px-16">
+        <section className="min-h-[55vh] flex flex-col justify-end pt-32 pb-16 px-6 lg:px-16">
           <div className="max-w-7xl mx-auto w-full">
             <p
               className="text-xs uppercase tracking-[0.1em] mb-6"
@@ -248,7 +285,49 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── 2. TIMELINE ──────────────────────────────────── */}
+        {/* ── 2. CV KARTA ──────────────────────────────────── */}
+        <section className="py-8 px-6 lg:px-16">
+          <div className="max-w-7xl mx-auto">
+            <FadeIn>
+              <div
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 px-8 py-10 lg:px-12"
+                style={{ backgroundColor: "var(--color-dark-bg)", borderRadius: "4px" }}
+              >
+                {/* Left */}
+                <div>
+                  <p
+                    className="text-xs uppercase tracking-[0.1em] mb-2 font-heading"
+                    style={{ color: "var(--color-dark-muted)" }}
+                  >
+                    Životopis
+                  </p>
+                  <p
+                    className="font-heading font-medium text-lg"
+                    style={{ color: "var(--color-dark-text)" }}
+                  >
+                    Aktuální životopis ke stažení
+                  </p>
+                </div>
+
+                {/* Button */}
+                <a
+                  href="/cv.pdf"
+                  download
+                  className="inline-flex items-center gap-3 px-8 py-4 font-heading font-medium text-sm tracking-wide shrink-0 transition-opacity duration-200 hover:opacity-85"
+                  style={{
+                    backgroundColor: "var(--color-accent)",
+                    color: "var(--color-dark-bg)",
+                  }}
+                >
+                  Stáhnout CV
+                  <span aria-hidden>↓</span>
+                </a>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* ── 3. TIMELINE ──────────────────────────────────── */}
         <section className="py-24 px-6 lg:px-16">
           <div className="max-w-7xl mx-auto">
             <FadeIn>
@@ -273,8 +352,11 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── 3. SKILLS ────────────────────────────────────── */}
-        <section className="py-24 px-6 lg:px-16" style={{ borderTop: "1px solid var(--color-border)" }}>
+        {/* ── 4. SKILLS ────────────────────────────────────── */}
+        <section
+          className="py-24 px-6 lg:px-16"
+          style={{ borderTop: "1px solid var(--color-border)" }}
+        >
           <div className="max-w-7xl mx-auto">
             <FadeIn>
               <p
@@ -311,10 +393,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── 4. OSOBNÍ SEKCE ──────────────────────────────── */}
-        <section className="py-24 px-6 lg:px-16" style={{ borderTop: "1px solid var(--color-border)" }}>
+        {/* ── 5. OSOBNÍ SEKCE ──────────────────────────────── */}
+        <section
+          className="py-24 px-6 lg:px-16"
+          style={{ borderTop: "1px solid var(--color-border)" }}
+        >
           <div className="max-w-7xl mx-auto">
-            <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-24">
+            <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-24 lg:items-start">
               <FadeIn>
                 <p
                   className="text-xs uppercase tracking-[0.1em] mb-8 lg:mb-0"
@@ -323,25 +408,33 @@ export default function AboutPage() {
                   Mimo školu
                 </p>
               </FadeIn>
-              <FadeIn delay={0.1}>
+
+              <FadeIn delay={0.08}>
                 <h2
-                  className="font-heading font-medium text-2xl mb-6 tracking-[-0.01em]"
+                  className="font-heading font-medium text-2xl mb-8 tracking-[-0.01em]"
                   style={{ color: "var(--color-text)" }}
                 >
                   Mimo školu
                 </h2>
-                <p
-                  className="text-lg leading-[1.75] max-w-xl"
-                  style={{ color: "var(--color-muted)" }}
-                >
-                  Když zrovna nekreslím v SolidWorks, hraju volejbal,
-                  experimentuju v kuchyni se sushi a italskou kuchyní, nebo
-                  se ztrácím ve hrách jako Cities: Skylines a Minecraft.
-                </p>
+                <div className="flex flex-wrap gap-3">
+                  {hobbies.map((h) => (
+                    <span
+                      key={h}
+                      className="py-2.5 px-5 text-sm font-heading"
+                      style={{
+                        border: "1px solid var(--color-border)",
+                        color: "var(--color-text)",
+                      }}
+                    >
+                      {h}
+                    </span>
+                  ))}
+                </div>
               </FadeIn>
             </div>
           </div>
         </section>
+
       </main>
 
       <Footer />
