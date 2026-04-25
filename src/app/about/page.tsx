@@ -311,16 +311,15 @@ export default function AboutPage() {
 
                 {/* Button */}
                 <a
-                  href="/cv.pdf"
-                  download
+                  href="/cv"
                   className="inline-flex items-center gap-3 px-8 py-4 font-heading font-medium text-sm tracking-wide shrink-0 transition-opacity duration-200 hover:opacity-85"
                   style={{
                     backgroundColor: "var(--color-accent)",
                     color: "var(--color-dark-bg)",
                   }}
                 >
-                  Stáhnout CV
-                  <span aria-hidden>↓</span>
+                  Zobrazit CV
+                  <span aria-hidden>→</span>
                 </a>
               </div>
             </FadeIn>
