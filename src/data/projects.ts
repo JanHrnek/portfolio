@@ -84,56 +84,71 @@ export const projects: Project[] = [
       },
     ],
 
-    nextProjectSlug: "lemmacon",
+    nextProjectSlug: "zp8-elevator-brake",
   },
 
   {
-    slug: "lemmacon",
-    title: "Lemmacon",
-    subtitle: "Automatizační systém pro průmyslové výkaznictví",
-    year: "2024",
-    category: "Software / Automatizace",
-    heroGradient: "linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #ececec 100%)",
+    slug: "zp8-elevator-brake",
+    title: "ZP8 Elevator Brake",
+    subtitle: "Bezpečnostní brzdný systém výtahu",
+    year: "2025",
+    category: "Týmový projekt / VUT",
+    heroGradient: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
 
     overview: [
-      "Lemmacon je sada Excel/VBA nástrojů navržená pro automatizaci opakujících se výkazů v průmyslovém prostředí. Původní proces zabíral denně hodiny ruční práce a byl náchylný k chybám při přepisování dat mezi systémy.",
-      "Systém zahrnuje generátor reportů, validátor dat a export pipeline do PDF a firemního ERP. Klíčem byl návrh robustní chybové obsluhy — průmyslové prostředí nepromíjí pády makra uprostřed noční směny.",
+      "ZP8 Elevator Brake je výsledkem týmového projektu (Team 02) v rámci předmětu ZP8 na VUT FSI. Cílem bylo navrhnout a realizovat funkční bezpečnostní brzdný systém výtahu — systém, který musí při detekci pádu spolehlivě zastavit kabinu do definované vzdálenosti.",
+      "Systém kombinuje aktivní elektromagnetickou brzdu s pasivní pružinovou zálohou. ESP32 mikrokontrolér přijímá data z MPU-6050 akcelerometru přes I2C a vyhodnocuje stav pádu. Komunikace mezi redundantními řídicími uzly probíhá přes ESP-NOW protokol bez závislosti na Wi-Fi infrastruktuře.",
+      "Projekt prošel dvěma formálními design review fázemi — PDR (Preliminary Design Review) a CDR (Critical Design Review) — s dokumentací v anglickém jazyce. Tým čítá čtyři členy a vývoj probíhal po dobu dvanácti týdnů od konceptu po funkční prototyp.",
     ],
 
     gallery: [
       {
-        gradient: "linear-gradient(160deg, #e8e8e8 0%, #d0d0d0 100%)",
-        caption: "Dashboard — přehled stavu automatizace přes směny",
+        gradient: "linear-gradient(160deg, #1a1a2e 0%, #16213e 80%, #0d1b2a 100%)",
+        caption: "Mechanická sestava — aktivní brzda s elektromagnetem a pasivní pružinová záloha",
       },
       {
-        gradient: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)",
-        caption: "Validační modul — kontrola integrity dat před exportem",
+        gradient: "linear-gradient(135deg, #0f3460 0%, #1a1a2e 60%, #16213e 100%)",
+        caption: "ESP32 řídicí deska s MPU-6050 — detekce pádu a ESP-NOW komunikace",
+      },
+      {
+        gradient: "linear-gradient(160deg, #16213e 0%, #1a1a2e 50%, #0f3460 100%)",
+        caption: "CDR dokumentace — schéma brzdné sekvence a PID regulační smyčka",
       },
     ],
 
     specs: [
-      { label: "Platforma", value: "Excel / VBA" },
-      { label: "Výstupní formáty", value: "PDF, CSV, ERP import" },
-      { label: "Počet modulů", value: "7" },
-      { label: "Ušetřený čas", value: "~3 hod / den" },
+      { label: "Mikrokontrolér", value: "ESP32 (dual-core)" },
+      { label: "Senzor", value: "MPU-6050 (akcelerometr + gyroskop)" },
+      { label: "Komunikace", value: "ESP-NOW (peer-to-peer, bez Wi-Fi)" },
+      { label: "Brzda aktivní", value: "Elektromagnetická, 24V" },
+      { label: "Brzda pasivní", value: "Pružiny Sodemann — záloha při výpadku napájení" },
+      { label: "Tlumič nárazů", value: "Hydraulický, parametry dle EN 81-20" },
+      { label: "Regulace", value: "PID smyčka — řízení brzdné síly" },
+      { label: "Design review", value: "PDR + CDR (dokumentace EN)" },
     ],
 
     stats: [
-      { number: "7", label: "automatizovaných modulů" },
-      { number: "3", label: "hodiny ušetřeny denně" },
-      { number: "12", label: "výstupních formátů" },
+      { number: "2", label: "typy brzd (aktivní + pasivní)" },
+      { number: "4", label: "členové týmu" },
+      { number: "12", label: "týdnů vývoje" },
+      { number: "2", label: "design review fáze" },
     ],
 
     challenges: [
       {
-        title: "Chybová obsluha v průmyslovém prostředí",
+        title: "Výběr a dimenzování pružin",
         description:
-          "VBA bez správné error handling rutiny padá tiše a zanechá data v nekonzistentním stavu. Návrh rollback mechanismu pro každý kritický krok byl zásadní.",
+          "Pružiny Sodemann musí zajistit dostatečnou brzdnou sílu při výpadku napájení, ale nesmí způsobit přetížení mechaniky při normálním uvolnění brzdy. Iterativní výpočet tuhosti k a předpětí s ohledem na certifikační normu EN 81-20 zabral podstatnou část konstrukční fáze.",
       },
       {
-        title: "Integrace s ERP systémem",
+        title: "Synchronizace aktivní a pasivní brzdy",
         description:
-          "Každý ERP má jiný formát importu. Adaptér pro specifický zákaznický systém vyžadoval reverse engineering exportního formátu bez dokumentace.",
+          "Přechod mezi aktivním elektromagnetickým brzděním a pasivní zálohou musí být plynulý — žádný okamžik bez brzdné síly. Časování demagnetizace cívky a uvolnění pružiny je kritické a vyžadovalo ladění firmware s osciloskopem na každé iteraci.",
+      },
+      {
+        title: "Návrh tlumičů nárazů",
+        description:
+          "Tlumiče musí absorbovat zbytkovou kinetickou energii kabiny po zabrzdění. Výběr hydraulického tlumiče a jeho parametrů byl podmíněn normou EN 81-20 a výpočtem maximální rychlosti pádu — kombinace strojní analýzy a normativních požadavků v jednom.",
       },
     ],
 

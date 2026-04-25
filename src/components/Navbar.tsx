@@ -1,10 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+
+const navLinks = [
+  { label: "Projekty", href: "/#projekty" },
+  { label: "About", href: "/about" },
+  { label: "Kontakt", href: "/#kontakt" },
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -22,21 +31,37 @@ export default function Navbar() {
       )}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-16 h-16 flex items-center justify-between">
-        <span className="font-heading font-bold text-lg tracking-tight">JH</span>
+        <Link
+          href="/"
+          className="font-heading font-bold text-lg tracking-tight"
+          style={{ color: "var(--color-text)" }}
+        >
+          JH
+        </Link>
         <div className="flex items-center gap-8">
-          {[
-            { label: "Projekty", href: "#projekty" },
-            { label: "About", href: "#about" },
-            { label: "Kontakt", href: "#kontakt" },
-          ].map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
-              className="text-sm text-[#6b6b6b] hover:text-[#0a0a0a] transition-colors duration-200"
-            >
-              {label}
-            </a>
-          ))}
+          {navLinks.map(({ label, href }) => {
+            const isActive = href === "/about" && pathname === "/about"
+            return (
+              <Link
+                key={href}
+                href={href}
+                className="text-sm transition-colors duration-200"
+                style={{
+                  color: isActive ? "var(--color-text)" : "var(--color-muted)",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = "var(--color-text)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = isActive
+                    ? "var(--color-text)"
+                    : "var(--color-muted)")
+                }
+              >
+                {label}
+              </Link>
+            )
+          })}
         </div>
       </nav>
     </header>

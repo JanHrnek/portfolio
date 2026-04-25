@@ -12,7 +12,13 @@
       "Bash(curl -s -o /dev/null -w \"home:%{http_code} \" http://localhost:3002)",
       "Bash(curl -s -o /dev/null -w \"axiscore:%{http_code}\" http://localhost:3002/projekty/axiscore)",
       "Bash(curl -s -o /dev/null -w \"lemmacon:%{http_code} \" http://localhost:3002/projekty/lemmacon)",
-      "Bash(curl -s -o /dev/null -w \"nonexistent:%{http_code}\" http://localhost:3002/projekty/neexistuje)"
+      "Bash(curl -s -o /dev/null -w \"nonexistent:%{http_code}\" http://localhost:3002/projekty/neexistuje)",
+      "Bash(curl -s -o /dev/null -w \"home:%{http_code} zp8:%{http_code_zp8}\" http://localhost:3002)",
+      "Bash(curl -s -o /dev/null -w \" zp8:%{http_code}\" http://localhost:3002/projekty/zp8-elevator-brake)",
+      "Bash(curl -s -o /dev/null -w \" lemmacon:%{http_code}\" http://localhost:3002/projekty/lemmacon)",
+      "Bash(curl -s -o /dev/null -w \"home:%{http_code} about:%{http_code_about}\" http://localhost:3002)",
+      "Bash(curl -s -o /dev/null -w \" about:%{http_code}\" http://localhost:3002/about)",
+      "Bash(curl -s -o /dev/null -w \"about:%{http_code}\" http://localhost:3002/about)"
     ]
   }
 }
