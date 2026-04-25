@@ -8,19 +8,22 @@ import ProjectCard from "@/components/ProjectCard"
 
 const projects = [
   {
-    title: "AxisCore Gimbal",
-    description: "DIY 3-axis camera stabilizer",
+    title: "AxisCore",
+    description: "DIY 3-osý kamerový gimbal",
     gradientClass: "bg-gradient-to-br from-zinc-800 to-zinc-900",
+    href: "/projekty/axiscore",
   },
   {
-    title: "Lemmacon Automation",
-    description: "Excel/VBA automation system",
+    title: "Lemmacon",
+    description: "Excel/VBA automatizační systém",
     gradientClass: "bg-gradient-to-br from-slate-100 to-slate-200",
+    href: "/projekty/lemmacon",
   },
   {
     title: "ZP8 Elevator Brake",
     description: "Emergency braking system, ESP32",
     gradientClass: "bg-gradient-to-br from-neutral-700 to-neutral-800",
+    href: undefined,
   },
 ]
 
