@@ -14,10 +14,16 @@ const projects = [
     href: "/projekty/axiscore",
   },
   {
-    title: "ZP8 Elevator Brake",
-    description: "Bezpečnostní brzdný systém výtahu, ESP32",
-    gradientClass: "bg-gradient-to-br from-slate-800 to-blue-950",
-    href: "/projekty/zp8-elevator-brake",
+    title: "MediaMix Mold Design",
+    description: "Koncept formy pro polyuretanové výrobky",
+    gradientClass: "bg-gradient-to-br from-violet-950 to-purple-900",
+    href: "/projekty/mediamix-forma",
+  },
+  {
+    title: "Volleyball Net System",
+    description: "Samonavíjecí systém volejbalové sítě — BP",
+    gradientClass: "bg-gradient-to-br from-emerald-100 to-green-200",
+    href: "/projekty/bakalarka-volejbal",
   },
 ]
 

@@ -1,4 +1,7 @@
-export type Project = {
+// ── Types ─────────────────────────────────────────────────────
+
+export type MainProject = {
+  type: "main"
   slug: string
   title: string
   subtitle: string
@@ -16,8 +19,22 @@ export type Project = {
   nextProjectSlug: string
 }
 
-export const projects: Project[] = [
+export type MiniProject = {
+  type: "mini"
+  slug: string
+  title: string
+  description: string
+  category: string
+}
+
+// Backwards compat alias used in ProjectDetail
+export type Project = MainProject
+
+// ── Main projects ─────────────────────────────────────────────
+
+export const mainProjects: MainProject[] = [
   {
+    type: "main",
     slug: "axiscore",
     title: "AxisCore",
     subtitle: "DIY 3-osý gimbal — od ambice k poučení",
@@ -94,6 +111,7 @@ export const projects: Project[] = [
   },
 
   {
+    type: "main",
     slug: "zp8-elevator-brake",
     title: "ZP8 Elevator Brake",
     subtitle: "Bezpečnostní brzdný systém výtahu",
@@ -161,6 +179,182 @@ export const projects: Project[] = [
       },
     ],
 
+    nextProjectSlug: "bakalarka-volejbal",
+  },
+
+  {
+    type: "main",
+    slug: "bakalarka-volejbal",
+    title: "Volleyball Net System",
+    subtitle: "Samonavíjecí a napínací systém volejbalové sítě",
+    year: "2026",
+    category: "Bakalářská práce / VUT",
+    heroGradient: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%)",
+    heroTheme: "light",
+    accentColor: "#16A34A",
+    galleryLayout: "hero-2col",
+
+    overview: [
+      "Bakalářská práce se zaměřuje na návrh halového volejbalového sloupu s integrovaným mechanismem pro napínání a výškové nastavení sítě. Klíčovým požadavkem je kompaktnost — celý pohonný a převodový systém musí být ukryt uvnitř sloupu, aniž by narušil jeho vizuální čistotu nebo funkčnost.",
+      "Uvnitř sloupu je uložen pohybový šroub v kombinaci s převodovým mechanismem a elektrickým pohonem. Ovládání probíhá přes dotykový displej s přednastavenými výškovými presety dle FIVB norem — muži 243 cm, ženy 224 cm, mládež — a možností manuálního nastavení s milimetrovou přesností.",
+      "Výstupem práce bude plně funkční 3D tisknutý demonstrátor, který ověří kinematiku mechanismu, odezvu ovládání a odolnost vůči dynamickým nárazům míče do sítě. Projekt propojuje strojní návrh, elektronické řízení a uživatelské rozhraní do jednoho produktu.",
+    ],
+
+    gallery: [
+      {
+        gradient: "linear-gradient(160deg, #f0fdf4 0%, #dcfce7 60%, #a7f3d0 100%)",
+        caption: "SolidWorks model sloupu — vnitřní mechanismus s pohybovým šroubem a převodem",
+      },
+      {
+        gradient: "linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)",
+        caption: "Ovládací panel — displej s výškovými presety a manuálním nastavením",
+      },
+      {
+        gradient: "linear-gradient(160deg, #d1fae5 0%, #a7f3d0 70%, #6ee7b7 100%)",
+        caption: "3D tisknutý funkční demonstrátor — validace kinematiky mechanismu",
+      },
+    ],
+
+    specs: [
+      { label: "Mechanismus pohonu", value: "Pohybový šroub + převodovka" },
+      { label: "Pohon", value: "Elektromotor (DC, enkodér)" },
+      { label: "Řídicí systém", value: "ESP32" },
+      { label: "Rozhraní", value: "Dotykový displej, presety FIVB" },
+      { label: "Max výška sítě", value: "243 cm (muži FIVB)" },
+      { label: "Min výška sítě", value: "224 cm (ženy FIVB)" },
+      { label: "Odolnost", value: "Dynamické nárazy míče do sítě" },
+      { label: "Výstup", value: "3D tisknutý funkční demonstrátor" },
+    ],
+
+    stats: [
+      { number: "3", label: "výškové presety (FIVB)" },
+      { number: "243", label: "cm maximální výška" },
+      { number: "1", label: "funkční demonstrátor" },
+      { number: "2", label: "sloupy v systému" },
+    ],
+
+    challenges: [
+      {
+        title: "Kompaktnost mechanismu uvnitř sloupu",
+        description:
+          "Pohybový šroub, převodovka, motor a řídicí elektronika musí být integrovány do průřezu standardního volejbalového sloupu. Každý milimetr prostoru je předmětem rozhodnutí — kompromisy mezi výkonem, zástavbovými rozměry a servisní dostupností.",
+      },
+      {
+        title: "Odolnost vůči nárazům",
+        description:
+          "Volejbalový míč dopadající na síť generuje impulzní zatížení přenášené přes napínací systém do mechanismu. Analýza dynamického chování a volba vhodných tlumicích prvků jsou kritické pro životnost pohybového šroubu a převodovky.",
+      },
+      {
+        title: "Intuitivní ovládání",
+        description:
+          "Systém musí být použitelný bez manuálu — obsluha tělocvičny nastaví výšku sítě za méně než 30 vteřin. Návrh UX displeje, předdefinované presety a zpětná vazba enkodéru tvoří klíčovou část projektu vedle mechaniky.",
+      },
+    ],
+
+    nextProjectSlug: "mediamix-forma",
+  },
+
+  {
+    type: "main",
+    slug: "mediamix-forma",
+    title: "MediaMix Mold Design",
+    subtitle: "Koncept formy pro polyuretanové výrobky",
+    year: "2025",
+    category: "Komerční projekt",
+    heroGradient: "linear-gradient(135deg, #1e1b4b 0%, #2d1b69 50%, #1a1a2e 100%)",
+    heroTheme: "dark",
+    accentColor: "#8B5CF6",
+    galleryLayout: "2col",
+
+    overview: [
+      "Projekt pro firmu MediaMix zahrnoval kompletní návrh konceptu formy pro výrobu produktů z polyuretanu. Tvarová složitost výrobku neumožňovala použití standardních dělicích rovin — návrh formy vyžadoval analýzu úkosů, definici složených dělicích ploch a návrh vyhazovacího systému.",
+      "Součástí projektu byl návrh automatizovaného systému nanášení separátoru na tvarové plochy formy. Manuální aplikace separátoru je časově náročná, nerovnoměrná a při otevírání formy vytváří bezpečnostní rizika. Automatizace tohoto kroku zkracuje cyklus a eliminuje kontakt obsluhy s aktivními chemickými látkami.",
+    ],
+
+    gallery: [
+      {
+        gradient: "linear-gradient(160deg, #1e1b4b 0%, #312e81 50%, #1a1a2e 100%)",
+        caption: "SolidWorks 3D model formy — komplexní tvarová geometrie s dělicími plochami",
+      },
+      {
+        gradient: "linear-gradient(135deg, #2d1b69 0%, #4c1d95 60%, #1e1b4b 100%)",
+        caption: "Automatický aplikátor separátoru — kinematická analýza pohybu trysky",
+      },
+    ],
+
+    specs: [
+      { label: "Software", value: "SolidWorks (3D model + 2D výkresy)" },
+      { label: "Materiál výrobku", value: "Polyuretan (PU lití)" },
+      { label: "Dělicí plocha", value: "Složená, víceúrovňová" },
+      { label: "Separátor", value: "Automatický aplikátor (pohybová osa)" },
+      { label: "Vyhazovací systém", value: "Kolíkový, symetrický" },
+      { label: "Dokumentace", value: "Technické výkresy 2D, kusovník" },
+    ],
+
+    stats: [
+      { number: "1", label: "kompletní forma" },
+      { number: "12", label: "technických výkresů" },
+      { number: "3", label: "iterace návrhu" },
+    ],
+
+    challenges: [
+      {
+        title: "Tvarová složitost formy",
+        description:
+          "Geometrie výrobku vyžadovala složenou dělicí rovinu s přechody na různých výškových úrovních. Definice dělicích ploch v SolidWorks a ověření průchodnosti pro vyjmutí výrobku zabralo více iterací než samotný design produktu.",
+      },
+      {
+        title: "Automatizace nanášení separátoru",
+        description:
+          "Návrh kinematiky pohyblivé trysky pro rovnoměrné pokrytí tvarových ploch formy separátorem. Výzva spočívala v definici trajektorie pohybu, která pokryje všechny konkávní partie formy bez nutnosti manuálních zásahů.",
+      },
+      {
+        title: "Bezpečnost při otevírání",
+        description:
+          "Polyuretanová forma při otevírání může generovat výrazné síly při přilnutí výrobku. Návrh vyhazovacího systému a volba povrchové úpravy tvarových ploch byly podmíněny analýzou sil při demoulding procesu.",
+      },
+    ],
+
     nextProjectSlug: "axiscore",
+  },
+]
+
+// ── Mini projects ─────────────────────────────────────────────
+
+export const miniProjects: MiniProject[] = [
+  {
+    type: "mini",
+    slug: "zpc-web-dev",
+    title: "Modern Web Development",
+    description: "Tvorba responzivních webů pomocí Hugo a Tailwind CSS",
+    category: "ZPC / VUT",
+  },
+  {
+    type: "mini",
+    slug: "zpc-2d-graphics",
+    title: "2D Graphics and Design",
+    description: "Vektorová grafika a branding v Adobe Illustrator",
+    category: "ZPC / VUT",
+  },
+  {
+    type: "mini",
+    slug: "zpc-3d-modeling",
+    title: "3D Modeling and Printing",
+    description: "Návrh mechanických dílů ve Fusion 360, 3D tisk",
+    category: "ZPC / VUT",
+  },
+  {
+    type: "mini",
+    slug: "zpc-3d-scanning",
+    title: "3D Scanning",
+    description: "Digitalizace objektů pomocí LiDAR a fotogrammetrie",
+    category: "ZPC / VUT",
+  },
+  {
+    type: "mini",
+    slug: "zpc-electronics",
+    title: "Electronic Systems",
+    description: "Prototypování s mikrokontroléry, IoT, PCB návrh",
+    category: "ZPC / VUT",
   },
 ]
