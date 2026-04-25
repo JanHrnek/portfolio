@@ -18,7 +18,10 @@
       "Bash(curl -s -o /dev/null -w \" lemmacon:%{http_code}\" http://localhost:3002/projekty/lemmacon)",
       "Bash(curl -s -o /dev/null -w \"home:%{http_code} about:%{http_code_about}\" http://localhost:3002)",
       "Bash(curl -s -o /dev/null -w \" about:%{http_code}\" http://localhost:3002/about)",
-      "Bash(curl -s -o /dev/null -w \"about:%{http_code}\" http://localhost:3002/about)"
+      "Bash(curl -s -o /dev/null -w \"about:%{http_code}\" http://localhost:3002/about)",
+      "Bash(curl -s -o /dev/null -w \"/ %{http_code}  /projekty %{http_code_p}  /kontakt %{http_code_k}\" http://localhost:3002)",
+      "Bash(curl -s -o /dev/null -w \" /projekty:%{http_code}\" http://localhost:3002/projekty)",
+      "Bash(curl -s -o /dev/null -w \" /kontakt:%{http_code}\" http://localhost:3002/kontakt)"
     ]
   }
 }

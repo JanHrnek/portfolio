@@ -7,11 +7,12 @@ import { spring } from "@/lib/animation"
 interface Props {
   title: string
   description: string
-  gradientClass: string
+  gradientClass?: string
+  gradientStyle?: string
   href?: string
 }
 
-export default function ProjectCard({ title, description, gradientClass, href }: Props) {
+export default function ProjectCard({ title, description, gradientClass, gradientStyle, href }: Props) {
   const card = (
     <motion.article
       whileHover={{
@@ -22,7 +23,10 @@ export default function ProjectCard({ title, description, gradientClass, href }:
       transition={spring.snappy}
       className="cursor-pointer"
     >
-      <div className={`aspect-[4/3] rounded-md ${gradientClass}`} />
+      <div
+        className={`aspect-[4/3] rounded-md ${gradientClass ?? ""}`}
+        style={gradientStyle ? { background: gradientStyle } : undefined}
+      />
       <div className="mt-5">
         <h3 className="font-heading font-medium text-lg">{title}</h3>
         <p className="text-sm mt-1.5 leading-relaxed" style={{ color: "var(--color-muted)" }}>

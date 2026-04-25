@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
-  { label: "Projekty", href: "/#projekty" },
+  { label: "Projekty", href: "/projekty" },
   { label: "About", href: "/about" },
-  { label: "Kontakt", href: "/#kontakt" },
+  { label: "Kontakt", href: "/kontakt" },
 ]
 
 export default function Navbar() {
@@ -40,7 +40,9 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center gap-8">
           {navLinks.map(({ label, href }) => {
-            const isActive = href === "/about" && pathname === "/about"
+            const isActive =
+              pathname === href ||
+              (href.length > 1 && pathname.startsWith(href))
             return (
               <Link
                 key={href}
