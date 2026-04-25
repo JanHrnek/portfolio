@@ -5,6 +5,9 @@ export type Project = {
   year: string
   category: string
   heroGradient: string
+  heroTheme: "dark" | "light"
+  accentColor: string
+  galleryLayout: "2col" | "hero-2col"
   overview: string[]
   gallery: { gradient: string; caption: string }[]
   specs: { label: string; value: string }[]
@@ -21,6 +24,9 @@ export const projects: Project[] = [
     year: "2024",
     category: "Mechanika / Elektronika",
     heroGradient: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #111 100%)",
+    heroTheme: "dark",
+    accentColor: "#D97706",
+    galleryLayout: "2col",
 
     overview: [
       "AxisCore vznikl z jednoduché ambice: postavit plnohodnotný 3-osý kamerový stabilizátor vlastními silami. Ne kupovat hotový DJI, ale porozumět každé šroubce, každému kabelu, každému řádku firmware. Projekt kombinoval mechaniku, elektroniku a software v jednom celku.",
@@ -94,6 +100,9 @@ export const projects: Project[] = [
     year: "2025",
     category: "Týmový projekt / VUT",
     heroGradient: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+    heroTheme: "light",
+    accentColor: "#0D9488",
+    galleryLayout: "hero-2col",
 
     overview: [
       "ZP8 Elevator Brake je výsledkem týmového projektu (Team 02) v rámci předmětu ZP8 na VUT FSI. Cílem bylo navrhnout a realizovat funkční bezpečnostní brzdný systém výtahu — systém, který musí při detekci pádu spolehlivě zastavit kabinu do definované vzdálenosti.",

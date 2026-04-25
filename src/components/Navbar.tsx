@@ -11,7 +11,11 @@ const navLinks = [
   { label: "Kontakt", href: "/kontakt" },
 ]
 
-export default function Navbar() {
+interface NavbarProps {
+  lightLinks?: boolean
+}
+
+export default function Navbar({ lightLinks = false }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
@@ -20,6 +24,23 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  const logoColor = scrolled
+    ? "var(--color-text)"
+    : lightLinks
+    ? "rgba(255,255,255,0.95)"
+    : "var(--color-text)"
+
+  function getLinkColor(isActive: boolean) {
+    if (scrolled) return isActive ? "var(--color-text)" : "var(--color-muted)"
+    if (lightLinks) return isActive ? "#ffffff" : "rgba(255,255,255,0.6)"
+    return isActive ? "var(--color-text)" : "var(--color-muted)"
+  }
+
+  function getHoverColor() {
+    if (scrolled || !lightLinks) return "var(--color-text)"
+    return "#ffffff"
+  }
 
   return (
     <header
@@ -33,32 +54,28 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 lg:px-16 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="font-heading font-bold text-lg tracking-tight"
-          style={{ color: "var(--color-text)" }}
+          className="font-heading font-bold text-lg tracking-tight transition-colors duration-300"
+          style={{ color: logoColor }}
         >
           JH
         </Link>
+
         <div className="flex items-center gap-8">
           {navLinks.map(({ label, href }) => {
             const isActive =
               pathname === href ||
               (href.length > 1 && pathname.startsWith(href))
+            const color = getLinkColor(isActive)
+            const hoverColor = getHoverColor()
+
             return (
               <Link
                 key={href}
                 href={href}
                 className="text-sm transition-colors duration-200"
-                style={{
-                  color: isActive ? "var(--color-text)" : "var(--color-muted)",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "var(--color-text)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = isActive
-                    ? "var(--color-text)"
-                    : "var(--color-muted)")
-                }
+                style={{ color }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = hoverColor)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = getLinkColor(isActive))}
               >
                 {label}
               </Link>

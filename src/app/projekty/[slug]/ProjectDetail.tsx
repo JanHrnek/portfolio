@@ -27,13 +27,7 @@ function useIsDesktop() {
   return isDesktop
 }
 
-function FadeIn({
-  children,
-  delay = 0,
-}: {
-  children: React.ReactNode
-  delay?: number
-}) {
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   return (
@@ -63,7 +57,19 @@ function FadeInLeft({ children }: { children: React.ReactNode }) {
   )
 }
 
-function AnimatedStat({ stat }: { stat: { number: string; label: string } }) {
+// ── Animated stat — accent number ─────────────────────────────
+
+function AnimatedStat({
+  stat,
+  accentColor,
+  borderColor,
+  labelColor,
+}: {
+  stat: { number: string; label: string }
+  accentColor: string
+  borderColor: string
+  labelColor: string
+}) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-50px" })
   const numVal = parseInt(stat.number, 10) || 0
@@ -77,11 +83,7 @@ function AnimatedStat({ stat }: { stat: { number: string; label: string } }) {
   }, [isInView, numVal, count])
 
   return (
-    <div
-      ref={ref}
-      className="py-8"
-      style={{ borderBottom: "1px solid var(--color-dark-border)" }}
-    >
+    <div ref={ref} className="py-8" style={{ borderBottom: `1px solid ${borderColor}` }}>
       <div className="text-right">
         <motion.span
           className="font-heading font-bold block"
@@ -89,15 +91,12 @@ function AnimatedStat({ stat }: { stat: { number: string; label: string } }) {
             fontSize: "clamp(4rem, 10vw, 7.5rem)",
             lineHeight: 1,
             letterSpacing: "-0.03em",
-            color: "var(--color-dark-text)",
+            color: accentColor,
           }}
         >
           {displayVal}
         </motion.span>
-        <p
-          className="text-sm mt-2 uppercase tracking-[0.08em]"
-          style={{ color: "var(--color-dark-muted)" }}
-        >
+        <p className="text-sm mt-2 uppercase tracking-[0.08em]" style={{ color: labelColor }}>
           {stat.label}
         </p>
       </div>
@@ -105,31 +104,32 @@ function AnimatedStat({ stat }: { stat: { number: string; label: string } }) {
   )
 }
 
+// ── Parallax image ────────────────────────────────────────────
+
 function ParallaxImage({
   gradient,
   caption,
   isDesktop,
+  aspectRatio = "16 / 10",
 }: {
   gradient: string
   caption: string
   isDesktop: boolean
+  aspectRatio?: string
 }) {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
   const rawY = useTransform(scrollYProgress, [0, 1], ["80px", "-80px"])
 
   const captionRef = useRef(null)
   const captionInView = useInView(captionRef, { once: true, margin: "-50px" })
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <div
         ref={ref}
         className="relative overflow-hidden rounded-md"
-        style={{ aspectRatio: "16 / 10" }}
+        style={{ aspectRatio }}
       >
         <motion.div
           style={{
@@ -157,6 +157,71 @@ function ParallaxImage({
   )
 }
 
+// ── Gallery layouts ───────────────────────────────────────────
+
+function Gallery2Col({
+  gallery,
+  isDesktop,
+}: {
+  gallery: Project["gallery"]
+  isDesktop: boolean
+}) {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {gallery.map((item, i) => (
+        <div
+          key={i}
+          className={
+            gallery.length % 2 !== 0 && i === gallery.length - 1
+              ? "lg:col-span-2"
+              : ""
+          }
+        >
+          <ParallaxImage
+            gradient={item.gradient}
+            caption={item.caption}
+            isDesktop={isDesktop}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function GalleryHero2Col({
+  gallery,
+  isDesktop,
+}: {
+  gallery: Project["gallery"]
+  isDesktop: boolean
+}) {
+  const [first, ...rest] = gallery
+  return (
+    <div className="space-y-4">
+      {first && (
+        <ParallaxImage
+          gradient={first.gradient}
+          caption={first.caption}
+          isDesktop={isDesktop}
+          aspectRatio="21 / 9"
+        />
+      )}
+      {rest.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {rest.map((item, i) => (
+            <ParallaxImage
+              key={i}
+              gradient={item.gradient}
+              caption={item.caption}
+              isDesktop={isDesktop}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Main Component ────────────────────────────────────────────
 
 export default function ProjectDetail({
@@ -167,6 +232,27 @@ export default function ProjectDetail({
   nextProject: Project
 }) {
   const isDesktop = useIsDesktop()
+  const isDarkHero = project.heroTheme === "dark"
+  const accent = project.accentColor
+
+  // Specs section is opposite of hero
+  const specsIsDark = !isDarkHero
+  const specs = {
+    bg: specsIsDark ? "var(--color-dark-bg)" : "var(--color-bg)",
+    label: specsIsDark ? "var(--color-dark-muted)" : "var(--color-muted)",
+    value: specsIsDark ? "var(--color-dark-text)" : "var(--color-text)",
+    border: specsIsDark ? "var(--color-dark-border)" : "var(--color-border)",
+    statLabel: specsIsDark ? "var(--color-dark-muted)" : "var(--color-muted)",
+  }
+
+  // Hero text colors
+  const hero = {
+    bg: isDarkHero ? project.heroGradient : "var(--color-bg)",
+    text: isDarkHero ? "#F0F0F0" : "var(--color-text)",
+    muted: isDarkHero ? "rgba(255,255,255,0.5)" : "var(--color-muted)",
+    border: isDarkHero ? "rgba(255,255,255,0.15)" : "var(--color-border)",
+    subtle: isDarkHero ? "rgba(255,255,255,0.3)" : "var(--color-subtle)",
+  }
 
   // Hero scroll tracking
   const heroRef = useRef<HTMLDivElement>(null)
@@ -174,38 +260,31 @@ export default function ProjectDetail({
     target: heroRef,
     offset: ["start start", "end start"],
   })
-
   const titleScale = useTransform(heroProgress, [0, 0.8], [1, 0.78])
   const titleOpacity = useTransform(heroProgress, [0, 0.65], [1, 0])
   const metaOpacity = useTransform(heroProgress, [0, 0.4], [1, 0])
 
   return (
     <>
-      <Navbar />
+      <Navbar lightLinks={isDarkHero} />
 
       {/* ── 1. HERO ───────────────────────────────────────── */}
       <div ref={heroRef} className="relative h-[150vh]">
         <div
           className="sticky top-0 h-screen overflow-hidden flex flex-col justify-end px-6 lg:px-16"
-          style={{ paddingBottom: "clamp(4rem, 8vh, 8rem)" }}
+          style={{
+            paddingBottom: "clamp(4rem, 8vh, 8rem)",
+            background: hero.bg,
+          }}
         >
-          {/* Background gradient */}
-          <div
-            className="absolute inset-0 -z-10"
-            style={{ background: project.heroGradient, opacity: 0.08 }}
-          />
-
           {/* Meta row */}
-          <motion.div
-            className="max-w-7xl mx-auto w-full mb-6"
-            style={{ opacity: metaOpacity }}
-          >
+          <motion.div className="max-w-7xl mx-auto w-full mb-6" style={{ opacity: metaOpacity }}>
             <div
               className="flex items-center gap-4 text-xs uppercase tracking-[0.1em]"
-              style={{ color: "var(--color-muted)" }}
+              style={{ color: hero.muted }}
             >
               <span>{project.category}</span>
-              <span style={{ color: "var(--color-border)" }}>—</span>
+              <span style={{ color: hero.border }}>—</span>
               <span>{project.year}</span>
             </div>
           </motion.div>
@@ -216,7 +295,7 @@ export default function ProjectDetail({
               className="font-heading font-bold leading-[1.02] tracking-[-0.03em] mb-6"
               style={{
                 fontSize: "clamp(3.5rem, 10vw, 7.5rem)",
-                color: "var(--color-text)",
+                color: hero.text,
                 scale: isDesktop ? titleScale : 1,
                 opacity: titleOpacity,
                 transformOrigin: "left bottom",
@@ -227,7 +306,7 @@ export default function ProjectDetail({
 
             <motion.p
               className="text-xl max-w-xl leading-[1.5]"
-              style={{ color: "var(--color-muted)", opacity: metaOpacity }}
+              style={{ color: hero.muted, opacity: metaOpacity }}
             >
               {project.subtitle}
             </motion.p>
@@ -236,12 +315,9 @@ export default function ProjectDetail({
           {/* Scroll hint */}
           <motion.div
             className="max-w-7xl mx-auto w-full mt-10 flex items-center gap-3"
-            style={{ color: "var(--color-subtle)", opacity: metaOpacity }}
+            style={{ color: hero.subtle, opacity: metaOpacity }}
           >
-            <div
-              className="w-px h-8"
-              style={{ backgroundColor: "var(--color-border)" }}
-            />
+            <div className="w-px h-8" style={{ backgroundColor: hero.border }} />
             <span className="text-xs uppercase tracking-[0.1em]">Scrollovat dolů</span>
           </motion.div>
         </div>
@@ -253,8 +329,8 @@ export default function ProjectDetail({
           <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-24">
             <FadeIn>
               <p
-                className="text-xs uppercase tracking-[0.1em] mb-8 lg:mb-0"
-                style={{ color: "var(--color-subtle)" }}
+                className="text-xs uppercase tracking-[0.1em] mb-8 lg:mb-0 font-heading font-medium"
+                style={{ color: accent }}
               >
                 Přehled
               </p>
@@ -262,10 +338,7 @@ export default function ProjectDetail({
             <div className="space-y-8">
               {project.overview.map((para, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
-                  <p
-                    className="text-lg leading-[1.75]"
-                    style={{ color: "var(--color-muted)" }}
-                  >
+                  <p className="text-lg leading-[1.75]" style={{ color: "var(--color-muted)" }}>
                     {para}
                   </p>
                 </FadeIn>
@@ -277,22 +350,27 @@ export default function ProjectDetail({
 
       {/* ── 3. GALLERY ───────────────────────────────────── */}
       <section className="py-8 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto space-y-8">
-          {project.gallery.map((item, i) => (
-            <ParallaxImage
-              key={i}
-              gradient={item.gradient}
-              caption={item.caption}
-              isDesktop={isDesktop}
-            />
-          ))}
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <p
+              className="text-xs uppercase tracking-[0.1em] mb-8 font-heading font-medium"
+              style={{ color: accent }}
+            >
+              Galerie
+            </p>
+          </FadeIn>
+          {project.galleryLayout === "2col" ? (
+            <Gallery2Col gallery={project.gallery} isDesktop={isDesktop} />
+          ) : (
+            <GalleryHero2Col gallery={project.gallery} isDesktop={isDesktop} />
+          )}
         </div>
       </section>
 
-      {/* ── 4. SPECS (dark) ───────────────────────────────── */}
+      {/* ── 4. SPECS ─────────────────────────────────────── */}
       <section
         className="py-24 px-6 lg:px-16 mt-16"
-        style={{ backgroundColor: "var(--color-dark-bg)" }}
+        style={{ backgroundColor: specs.bg }}
       >
         <div className="max-w-7xl mx-auto">
           <FadeIn>
@@ -300,8 +378,8 @@ export default function ProjectDetail({
               {/* Specs table */}
               <div>
                 <p
-                  className="text-xs uppercase tracking-[0.1em] mb-8"
-                  style={{ color: "var(--color-dark-muted)" }}
+                  className="text-xs uppercase tracking-[0.1em] mb-8 font-heading font-medium"
+                  style={{ color: accent }}
                 >
                   Specifikace
                 </p>
@@ -310,14 +388,10 @@ export default function ProjectDetail({
                     <div
                       key={i}
                       className="flex justify-between py-4 text-sm"
-                      style={{ borderBottom: "1px solid var(--color-dark-border)" }}
+                      style={{ borderBottom: `1px solid ${specs.border}` }}
                     >
-                      <span style={{ color: "var(--color-dark-muted)" }}>
-                        {spec.label}
-                      </span>
-                      <span style={{ color: "var(--color-dark-text)" }}>
-                        {spec.value}
-                      </span>
+                      <span style={{ color: specs.label }}>{spec.label}</span>
+                      <span style={{ color: specs.value }}>{spec.value}</span>
                     </div>
                   ))}
                 </div>
@@ -326,13 +400,19 @@ export default function ProjectDetail({
               {/* Stats */}
               <div className="mt-16 lg:mt-0">
                 <p
-                  className="text-xs uppercase tracking-[0.1em] mb-2"
-                  style={{ color: "var(--color-dark-muted)" }}
+                  className="text-xs uppercase tracking-[0.1em] mb-2 font-heading font-medium"
+                  style={{ color: accent }}
                 >
                   Čísla
                 </p>
                 {project.stats.map((stat, i) => (
-                  <AnimatedStat key={i} stat={stat} />
+                  <AnimatedStat
+                    key={i}
+                    stat={stat}
+                    accentColor={accent}
+                    borderColor={specs.border}
+                    labelColor={specs.statLabel}
+                  />
                 ))}
               </div>
             </div>
@@ -348,15 +428,12 @@ export default function ProjectDetail({
             <div className="mb-12 lg:mb-0">
               <div className="lg:sticky lg:top-28">
                 <p
-                  className="text-xs uppercase tracking-[0.1em] mb-4"
-                  style={{ color: "var(--color-subtle)" }}
+                  className="text-xs uppercase tracking-[0.1em] mb-4 font-heading font-medium"
+                  style={{ color: accent }}
                 >
                   Výzvy & poučení
                 </p>
-                <div
-                  className="w-8 h-px"
-                  style={{ backgroundColor: "var(--color-accent)" }}
-                />
+                <div className="w-8 h-px" style={{ backgroundColor: accent }} />
               </div>
             </div>
 
@@ -390,7 +467,7 @@ export default function ProjectDetail({
       >
         <div className="max-w-7xl mx-auto">
           <p
-            className="text-xs uppercase tracking-[0.1em] mb-8"
+            className="text-xs uppercase tracking-[0.1em] mb-8 font-heading font-medium"
             style={{ color: "var(--color-subtle)" }}
           >
             Další projekt
@@ -403,19 +480,20 @@ export default function ProjectDetail({
             >
               <div>
                 <h2
-                  className="font-heading font-bold tracking-[-0.02em]"
+                  className="font-heading font-bold tracking-[-0.02em] transition-colors duration-200"
                   style={{
                     fontSize: "clamp(2.5rem, 7vw, 5rem)",
                     color: "var(--color-text)",
                     lineHeight: 1.05,
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = accent)}
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "var(--color-text)")
+                  }
                 >
                   {nextProject.title}
                 </h2>
-                <p
-                  className="mt-2 text-sm"
-                  style={{ color: "var(--color-subtle)" }}
-                >
+                <p className="mt-2 text-sm" style={{ color: "var(--color-subtle)" }}>
                   {nextProject.subtitle}
                 </p>
               </div>
