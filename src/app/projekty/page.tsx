@@ -1,10 +1,14 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import ScrollProgress from "@/components/ScrollProgress"
 import ProjectCard from "@/components/ProjectCard"
+import MiniProjectModal from "@/components/MiniProjectModal"
 import { mainProjects, miniProjects } from "@/data/projects"
+import type { MiniProject } from "@/data/projects"
 import { spring } from "@/lib/animation"
 
 const containerVariants = {
@@ -26,12 +30,16 @@ const miniCardVariants = {
 }
 
 export default function ProjektyPage() {
+  const [selectedMini, setSelectedMini] = useState<MiniProject | null>(null)
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null)
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
+      <ScrollProgress />
       <Navbar />
 
       <main className="pt-32 pb-24 px-6 lg:px-16">
@@ -102,11 +110,17 @@ export default function ProjektyPage() {
                 <motion.div
                   key={p.slug}
                   variants={miniCardVariants}
-                  className="py-5 px-6"
+                  className="py-5 px-6 cursor-pointer"
                   style={{
-                    border: "1px solid var(--color-border)",
+                    border: `1px solid ${hoveredSlug === p.slug ? "var(--color-accent)" : "var(--color-border)"}`,
                     borderRadius: "4px",
+                    transition: "border-color 0.2s ease",
                   }}
+                  onMouseEnter={() => setHoveredSlug(p.slug)}
+                  onMouseLeave={() => setHoveredSlug(null)}
+                  onClick={() => setSelectedMini(p)}
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.18 }}
                 >
                   <p
                     className="text-xs uppercase tracking-[0.08em] mb-2 font-heading"
@@ -114,12 +128,30 @@ export default function ProjektyPage() {
                   >
                     {p.category}
                   </p>
-                  <h3
-                    className="font-heading font-medium text-base mb-1.5"
-                    style={{ color: "var(--color-text)" }}
-                  >
-                    {p.title}
-                  </h3>
+                  <div className="flex items-start justify-between gap-2 mb-1.5">
+                    <h3
+                      className="font-heading font-medium text-base"
+                      style={{ color: "var(--color-text)" }}
+                    >
+                      {p.title}
+                    </h3>
+                    <motion.span
+                      animate={{
+                        opacity: hoveredSlug === p.slug ? 1 : 0,
+                        x: hoveredSlug === p.slug ? 0 : -4,
+                      }}
+                      transition={{ duration: 0.15 }}
+                      style={{
+                        color: "var(--color-accent)",
+                        fontSize: "0.875rem",
+                        fontFamily: "var(--font-heading)",
+                        flexShrink: 0,
+                        marginTop: "1px",
+                      }}
+                    >
+                      →
+                    </motion.span>
+                  </div>
                   <p
                     className="text-sm leading-relaxed"
                     style={{ color: "var(--color-muted)" }}
@@ -135,6 +167,8 @@ export default function ProjektyPage() {
       </main>
 
       <Footer />
+
+      <MiniProjectModal project={selectedMini} onClose={() => setSelectedMini(null)} />
     </motion.div>
   )
 }

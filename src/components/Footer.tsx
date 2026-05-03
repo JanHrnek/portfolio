@@ -1,6 +1,8 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { Mail } from "lucide-react"
+import { spring } from "@/lib/animation"
 
 function IconGitHub() {
   return (
@@ -28,18 +30,17 @@ function SocialLink({
   children: React.ReactNode
 }) {
   return (
-    <a
+    <motion.a
       href={href}
       aria-label={label}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="transition-colors duration-200"
-      style={{ color: "var(--color-muted)" }}
-      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
-      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-muted)")}
+      whileHover={{ scale: 1.1, rotate: 10, color: "var(--color-accent)" }}
+      transition={spring.snappy}
+      style={{ color: "var(--color-muted)", display: "inline-flex" }}
     >
       {children}
-    </a>
+    </motion.a>
   )
 }
 
@@ -47,9 +48,23 @@ export default function Footer() {
   return (
     <footer
       id="kontakt"
-      className="px-6 lg:px-16 pt-16 pb-10"
+      className="relative px-6 lg:px-16 pt-16 pb-10"
       style={{ borderTop: "1px solid var(--color-border)" }}
     >
+      {/* Gradient prechod shora */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: -80,
+          left: 0,
+          right: 0,
+          height: 80,
+          background: "linear-gradient(to bottom, transparent, var(--color-bg))",
+          pointerEvents: "none",
+        }}
+      />
+
       <div className="max-w-7xl mx-auto">
         {/* CTA */}
         <div className="mb-12">
@@ -60,7 +75,7 @@ export default function Footer() {
             Spolupráce
           </p>
           <p
-            className="font-heading font-medium mb-4"
+            className="font-heading font-bold mb-4"
             style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "var(--color-text)", lineHeight: 1.15 }}
           >
             Máte projekt?

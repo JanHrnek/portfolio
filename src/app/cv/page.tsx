@@ -75,7 +75,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
     <div className="mb-6">
       <p
         className="text-xs font-heading font-medium uppercase tracking-[0.12em]"
-        style={{ color: "#9E9E9E" }}
+        style={{ color: "#C8A96E" }}
       >
         {children}
       </p>
@@ -176,7 +176,7 @@ export default function CVPage() {
             <SectionHeading>Vzdělání</SectionHeading>
             <div className="space-y-4">
               {education.map((e) => (
-                <div key={e.institution} className="flex gap-8">
+                <div key={e.institution} className="cv-item flex gap-8">
                   <span
                     className="shrink-0 text-sm tabular-nums font-heading w-24"
                     style={{ color: "#9E9E9E" }}
@@ -207,7 +207,7 @@ export default function CVPage() {
             <SectionHeading>Praxe</SectionHeading>
             <div className="space-y-6">
               {experience.map((e) => (
-                <div key={`${e.year}-${e.company}`} className="flex gap-8">
+                <div key={`${e.year}-${e.company}`} className="cv-item flex gap-8">
                   <span
                     className="shrink-0 text-sm tabular-nums font-heading w-24"
                     style={{ color: "#9E9E9E" }}
@@ -244,7 +244,7 @@ export default function CVPage() {
             <SectionHeading>Certifikace</SectionHeading>
             <div className="space-y-2">
               {certifications.map((c) => (
-                <div key={c.code} className="flex gap-8">
+                <div key={c.code} className="cv-item flex gap-8">
                   <span
                     className="shrink-0 text-sm font-heading font-medium w-24"
                     style={{ color: "#0A0A0A" }}
@@ -264,7 +264,7 @@ export default function CVPage() {
             <SectionHeading>Dovednosti</SectionHeading>
             <div className="space-y-3">
               {skillGroups.map((g) => (
-                <div key={g.label} className="flex gap-8">
+                <div key={g.label} className="cv-item flex gap-8">
                   <span
                     className="shrink-0 text-sm font-heading font-medium w-24"
                     style={{ color: "#0A0A0A" }}

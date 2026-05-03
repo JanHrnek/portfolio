@@ -54,33 +54,47 @@ export default function FeaturedCard({
       onMouseMove={onMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={onMouseLeave}
+      animate={{
+        y: hovered ? -8 : 0,
+        boxShadow: hovered ? "0 20px 40px rgba(0,0,0,0.1)" : "0 0 0 rgba(0,0,0,0)",
+      }}
+      transition={spring.snappy}
       style={{
         rotateX: sRotX,
         rotateY: sRotY,
         transformPerspective: 1000,
         borderColor: hovered ? accentColor : "var(--color-border)",
+        borderRadius: "12px",
         height: size === "large" ? "100%" : "auto",
       }}
       className="relative overflow-hidden border flex flex-col cursor-pointer transition-colors duration-300"
     >
       {/* Image / gradient area */}
       <div
-        className={`relative overflow-hidden ${gradientClass} ${size === "large" ? "flex-1" : ""}`}
+        className={`relative overflow-hidden ${size === "large" ? "flex-1" : ""}`}
         style={{
-          background: gradientStyle,
           aspectRatio: size === "large" ? undefined : "4 / 3",
           minHeight: size === "large" ? 280 : undefined,
         }}
       >
+        <motion.div
+          className={`absolute inset-0 ${gradientClass}`}
+          animate={{ scale: hovered ? 1.05 : 1 }}
+          transition={spring.gentle}
+          style={{ background: gradientStyle }}
+        />
+
         {/* Large project number */}
         <span
           aria-hidden
           className="absolute bottom-3 right-4 font-heading font-bold select-none pointer-events-none"
           style={{
-            fontSize: "clamp(4rem, 10vw, 7rem)",
+            fontSize: "clamp(4rem, 10vw, 5rem)",
             lineHeight: 1,
             letterSpacing: "-0.04em",
-            color: "rgba(255,255,255,0.10)",
+            color: "rgba(255,255,255,0.06)",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           {num}
@@ -91,7 +105,7 @@ export default function FeaturedCard({
           className="absolute inset-0 flex items-center justify-center"
           animate={{ opacity: hovered ? 1 : 0 }}
           transition={spring.snappy}
-          style={{ background: "rgba(0,0,0,0.32)" }}
+          style={{ background: "rgba(0,0,0,0.32)", zIndex: 2 }}
         >
           <span
             className="font-heading font-medium text-sm tracking-wide px-5 py-2.5"

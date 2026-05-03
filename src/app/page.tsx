@@ -1,12 +1,14 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { motion, useInView, useMotionValue, animate, useTransform } from "framer-motion"
+import { motion, useInView, useMotionValue, useMotionTemplate, useSpring, animate, useTransform } from "framer-motion"
 import { Compass, Settings, Box, Cpu } from "lucide-react"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import FeaturedCard from "@/components/FeaturedCard"
 import MagneticButton from "@/components/MagneticButton"
+import ParticleBackground from "@/components/ParticleBackground"
+import HeroCarousel from "@/components/HeroCarousel"
 import { spring } from "@/lib/animation"
 
 // ── Data ─────────────────────────────────────────────────────
@@ -66,54 +68,6 @@ const stats = [
 ]
 
 // ── Helpers ──────────────────────────────────────────────────
-
-function useIsDesktop() {
-  const [ok, setOk] = useState(false)
-  useEffect(() => {
-    const check = () => setOk(window.innerWidth >= 768)
-    check()
-    window.addEventListener("resize", check, { passive: true })
-    return () => window.removeEventListener("resize", check)
-  }, [])
-  return ok
-}
-
-// Gradient mesh blobs (desktop only)
-function GradientMesh() {
-  const isDesktop = useIsDesktop()
-  if (!isDesktop) return null
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
-      <div
-        style={{
-          position: "absolute", top: "5%", left: "15%",
-          width: 500, height: 500,
-          background: "radial-gradient(circle, rgba(200,169,110,0.13) 0%, transparent 70%)",
-          filter: "blur(48px)",
-          animation: "mesh-1 9s ease-in-out infinite",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute", top: "35%", right: "10%",
-          width: 380, height: 380,
-          background: "radial-gradient(circle, rgba(150,150,150,0.07) 0%, transparent 70%)",
-          filter: "blur(56px)",
-          animation: "mesh-2 13s ease-in-out infinite",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute", bottom: "15%", left: "38%",
-          width: 420, height: 420,
-          background: "radial-gradient(circle, rgba(200,169,110,0.07) 0%, transparent 70%)",
-          filter: "blur(64px)",
-          animation: "mesh-3 11s ease-in-out infinite",
-        }}
-      />
-    </div>
-  )
-}
 
 // Letter-by-letter stagger for the name
 function AnimatedName({ name }: { name: string }) {
@@ -202,6 +156,31 @@ function StatCounter({ value, suffix, label }: { value: string; suffix: string; 
   )
 }
 
+// Subtle cursor glow — soft radial spotlight following the mouse
+function CursorGlow() {
+  const mouseX = useMotionValue(-1000)
+  const mouseY = useMotionValue(-1000)
+  const springX = useSpring(mouseX, { stiffness: 80, damping: 25 })
+  const springY = useSpring(mouseY, { stiffness: 80, damping: 25 })
+  const bg = useMotionTemplate`radial-gradient(650px circle at ${springX}px ${springY}px, rgba(200,169,110,0.07) 0%, transparent 60%)`
+
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
+    }
+    window.addEventListener("mousemove", move, { passive: true })
+    return () => window.removeEventListener("mousemove", move)
+  }, [mouseX, mouseY])
+
+  return (
+    <motion.div
+      className="fixed inset-0 pointer-events-none"
+      style={{ background: bg }}
+    />
+  )
+}
+
 // ── Page ─────────────────────────────────────────────────────
 
 function scrollTo(id: string) {
@@ -211,67 +190,86 @@ function scrollTo(id: string) {
 export default function Home() {
   return (
     <>
+      <ParticleBackground />
+      <CursorGlow />
       <Navbar />
 
       <main>
         {/* ── HERO ──────────────────────────────────────────── */}
         <section
           id="hero"
-          className="relative min-h-screen flex flex-col justify-center pt-16 px-6 lg:px-16 overflow-hidden"
+          className="relative flex items-center"
+          style={{
+            minHeight: "88vh",
+            paddingTop: "5rem",
+            paddingBottom: "4rem",
+            backgroundColor: "var(--color-bg)",
+          }}
         >
-          <GradientMesh />
+          <div className="w-full px-6 lg:px-16">
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
 
-          <div className="max-w-7xl mx-auto w-full relative">
-            {/* Name stagger */}
-            <h1
-              className="font-heading font-bold leading-[1.05] tracking-[-0.03em] mb-2"
-              style={{
-                fontSize: "clamp(3.5rem, 10vw, 7rem)",
-                color: "var(--color-text)",
-              }}
-            >
-              <AnimatedName name="Jan Hrnek" />
-            </h1>
+              {/* LEFT — text */}
+              <div className="flex-1 flex flex-col justify-center order-2 lg:order-1">
+                <h1
+                  className="font-heading font-bold leading-[1.05] tracking-[-0.03em] mb-4"
+                  style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "var(--color-text)" }}
+                >
+                  <AnimatedName name="Jan Hrnek" />
+                </h1>
 
-            {/* Accent line */}
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: 140 }}
-              transition={{ delay: 0.65, type: "spring", stiffness: 100, damping: 20 }}
-              style={{ height: 2, backgroundColor: "var(--color-accent)", marginBottom: "1.5rem" }}
-            />
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: 140 }}
+                  transition={{ delay: 0.65, type: "spring", stiffness: 100, damping: 20 }}
+                  style={{
+                    height: 2,
+                    backgroundColor: "var(--color-accent)",
+                    marginBottom: "1.5rem",
+                  }}
+                />
 
-            {/* Typewriter subtitle */}
-            <p
-              className="text-xl font-heading mb-6"
-              style={{ color: "var(--color-muted)", minHeight: "1.75rem" }}
-            >
-              <Typewriter text="Design Engineer" startDelay={0.55} />
-            </p>
+                <p
+                  className="text-xl font-heading mb-6"
+                  style={{ color: "var(--color-muted)", minHeight: "1.75rem" }}
+                >
+                  <Typewriter text="Design Engineer" startDelay={0.55} />
+                </p>
 
-            {/* Description */}
-            <motion.p
-              className="text-base max-w-xs leading-[1.65] mb-10"
-              style={{ color: "var(--color-muted)" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5, duration: 0.5 }}
-            >
-              Student konstrukčního inženýrství na VUT FSI Brno.
-              <br />
-              CAD, automatizace, DIY projekty.
-            </motion.p>
+                <motion.p
+                  className="text-base leading-[1.65] mb-10"
+                  style={{ color: "var(--color-muted)", maxWidth: 340 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5, duration: 0.5 }}
+                >
+                  Student konstrukčního inženýrství na VUT FSI Brno.
+                  <br />
+                  CAD, automatizace, DIY projekty.
+                </motion.p>
 
-            {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.7, ...spring.gentle }}
-            >
-              <MagneticButton onClick={() => scrollTo("projekty")}>
-                Prohlédnout projekty
-              </MagneticButton>
-            </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.7, ...spring.gentle }}
+                >
+                  <MagneticButton onClick={() => scrollTo("projekty")}>
+                    Prohlédnout projekty
+                  </MagneticButton>
+                </motion.div>
+              </div>
+
+              {/* RIGHT — 3D model carousel */}
+              <motion.div
+                className="flex-1 flex justify-center items-center order-1 lg:order-2"
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, ...spring.gentle }}
+              >
+                <HeroCarousel />
+              </motion.div>
+
+            </div>
           </div>
         </section>
 

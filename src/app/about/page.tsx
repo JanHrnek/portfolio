@@ -1,9 +1,10 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import ScrollProgress from "@/components/ScrollProgress"
 import { spring } from "@/lib/animation"
 
 // ── Data ──────────────────────────────────────────────────────
@@ -158,12 +159,17 @@ function TimelineItem({
 
       {/* Dot + vertical line */}
       <div className="relative shrink-0 flex flex-col items-center">
-        <div
-          className="w-2.5 h-2.5 rounded-full mt-1 z-10 shrink-0 transition-colors"
+        <motion.div
+          className="w-2.5 h-2.5 rounded-full mt-1 z-10 shrink-0"
+          whileHover={{ scale: 1.3 }}
+          transition={spring.snappy}
           style={{
             backgroundColor: item.upcoming
-              ? "var(--color-accent)"
+              ? "transparent"
               : "var(--color-text)",
+            border: item.upcoming
+              ? "2px solid var(--color-accent)"
+              : "none",
             boxShadow: item.upcoming
               ? "0 0 0 3px var(--color-bg), 0 0 0 4px var(--color-accent)"
               : "none",
@@ -225,6 +231,7 @@ function TimelineItem({
 function SkillCard({ skill, delay }: { skill: string; delay: number }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-60px" })
+  const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
@@ -232,10 +239,14 @@ function SkillCard({ skill, delay }: { skill: string; delay: number }) {
       initial={{ opacity: 0, y: 10 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ ...spring.gentle, delay }}
-      className="py-3 px-4 text-sm font-heading"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="py-3 px-4 text-sm font-heading transition-colors duration-200"
       style={{
-        border: "1px solid var(--color-border)",
+        border: `1px solid ${hovered ? "var(--color-accent)" : "var(--color-border)"}`,
+        borderRadius: "8px",
         color: "var(--color-text)",
+        backgroundColor: hovered ? "rgba(0,0,0,0.02)" : "transparent",
       }}
     >
       {skill}
@@ -252,6 +263,7 @@ export default function AboutPage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
+      <ScrollProgress />
       <Navbar />
 
       <main>
@@ -270,6 +282,7 @@ export default function AboutPage() {
               style={{
                 fontSize: "clamp(3rem, 8vw, 4.5rem)",
                 color: "var(--color-text)",
+                textShadow: "0 1px 2px rgba(0,0,0,0.05)",
               }}
             >
               O mně

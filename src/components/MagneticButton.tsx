@@ -32,7 +32,10 @@ export default function MagneticButton({ children, onClick }: Props) {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
-      className="inline-flex items-center gap-2 px-8 py-4 bg-[#0a0a0a] text-[#fafafa] font-heading font-medium text-sm tracking-wide hover:bg-[#c8a96e] hover:text-[#0a0a0a] transition-colors duration-200 cursor-pointer select-none"
+      whileHover={{ scale: 1.03, backgroundColor: "#c8a96e", color: "#0a0a0a" }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30, mass: 0.5 }}
+      className="inline-flex items-center gap-2 px-8 py-4 bg-[#0a0a0a] text-[#fafafa] font-heading font-medium text-sm tracking-wide rounded-full cursor-pointer select-none"
     >
       {children}
     </motion.button>

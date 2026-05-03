@@ -25,6 +25,9 @@ export type MiniProject = {
   title: string
   description: string
   category: string
+  details?: string[]
+  gallery?: { gradient: string; caption: string }[]
+  tags?: string[]
 }
 
 // Backwards compat alias used in ProjectDetail
@@ -328,6 +331,21 @@ export const miniProjects: MiniProject[] = [
     title: "Modern Web Development",
     description: "Tvorba responzivních webů pomocí Hugo a Tailwind CSS",
     category: "ZPC / VUT",
+    tags: ["Hugo", "Tailwind CSS", "HTML", "Responsive design"],
+    details: [
+      "V rámci předmětu ZPC na VUT FSI jsem absolvoval semestrální projekt zaměřený na moderní webový vývoj. Výstupem byl responzivní web postavený na statickém generátoru Hugo s Tailwind CSS stylováním.",
+      "Projekt zahrnoval návrh typografického systému, implementaci responzivního layoutu a optimalizaci výkonu pro produkční nasazení. Zaměřil jsem se na čistotu kódu a udržitelnost struktury šablon.",
+    ],
+    gallery: [
+      {
+        gradient: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #334155 100%)",
+        caption: "Hlavní strana — hero sekce a navigace",
+      },
+      {
+        gradient: "linear-gradient(135deg, #1e293b 0%, #334155 60%, #475569 100%)",
+        caption: "Mobilní responzivní layout",
+      },
+    ],
   },
   {
     type: "mini",
@@ -335,6 +353,21 @@ export const miniProjects: MiniProject[] = [
     title: "2D Graphics and Design",
     description: "Vektorová grafika a branding v Adobe Illustrator",
     category: "ZPC / VUT",
+    tags: ["Adobe Illustrator", "Vektorová grafika", "Branding", "Typography"],
+    details: [
+      "Projekt se zaměřoval na tvorbu vektorové grafiky a základy brandingu v Adobe Illustrator. Výstupem bylo logo a vizuální identita fiktivní značky, včetně definice barevné palety a typografického systému.",
+      "Práce zahrnovala návrh piktogramů, grafiku pro tisk ve vysokém rozlišení a export do standardizovaných formátů (SVG, PDF, PNG). Důraz byl kladen na přenositelnost a škálovatelnost výsledné grafiky.",
+    ],
+    gallery: [
+      {
+        gradient: "linear-gradient(135deg, #2d1b69 0%, #4c1d95 50%, #6d28d9 100%)",
+        caption: "Logo a vizuální identita — základní variace",
+      },
+      {
+        gradient: "linear-gradient(135deg, #4c1d95 0%, #5b21b6 60%, #7c3aed 100%)",
+        caption: "Sada piktogramů a ikonografika",
+      },
+    ],
   },
   {
     type: "mini",
@@ -342,6 +375,21 @@ export const miniProjects: MiniProject[] = [
     title: "3D Modeling and Printing",
     description: "Návrh mechanických dílů ve Fusion 360, 3D tisk",
     category: "ZPC / VUT",
+    tags: ["Fusion 360", "FDM tisk", "PETG", "Parametrický návrh"],
+    details: [
+      "Projekt kombinoval parametrický CAD návrh ve Fusion 360 s výrobou metodou FDM 3D tisku. Cílem bylo navrhnout a vytisknout funkční mechanický díl s tolerancemi umožňujícími smontování bez postprocessingu.",
+      "Postupoval jsem od skici a definice parametrů přes generování objemového modelu po přípravu G-kódu v PrusaSlicer. Materiál PETG byl zvolen pro kombinaci tuhosti, tepelné odolnosti a dobré tisknutelnosti.",
+    ],
+    gallery: [
+      {
+        gradient: "linear-gradient(135deg, #1c1c1c 0%, #2a2a2a 50%, #3a3a3a 100%)",
+        caption: "Fusion 360 — parametrický model s ložiskovou dírou",
+      },
+      {
+        gradient: "linear-gradient(135deg, #292524 0%, #44403c 60%, #57534e 100%)",
+        caption: "Vytisknutý díl — kontrola rozměrů posuvným měřítkem",
+      },
+    ],
   },
   {
     type: "mini",
@@ -349,6 +397,21 @@ export const miniProjects: MiniProject[] = [
     title: "3D Scanning",
     description: "Digitalizace objektů pomocí LiDAR a fotogrammetrie",
     category: "ZPC / VUT",
+    tags: ["LiDAR", "Fotogrammetrie", "Meshroom", "Point cloud"],
+    details: [
+      "Projekt se zaměřoval na metody digitalizace fyzických objektů do 3D modelů. Vyzkoušel jsem dva přístupy: LiDAR skenování pro rychlý záběr prostoru a fotogrammetrii pro detailní rekonstrukci tvarů.",
+      "Pro fotogrammetrické zpracování byl použit software Meshroom (AliceVision) — pipeline zahrnoval pořízení sady překrývajících se fotografií, výpočet point cloudu a generování meshe. Výsledek byl exportován jako OBJ pro použití v CAD systémech.",
+    ],
+    gallery: [
+      {
+        gradient: "linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0369a1 100%)",
+        caption: "Point cloud — vizualizace naskenovaného objektu",
+      },
+      {
+        gradient: "linear-gradient(135deg, #0369a1 0%, #0284c7 60%, #0ea5e9 100%)",
+        caption: "Photogrammetry mesh po rekonstrukci v Meshroom",
+      },
+    ],
   },
   {
     type: "mini",
@@ -356,5 +419,20 @@ export const miniProjects: MiniProject[] = [
     title: "Electronic Systems",
     description: "Prototypování s mikrokontroléry, IoT, PCB návrh",
     category: "ZPC / VUT",
+    tags: ["ESP32", "Arduino", "KiCad", "IoT", "C++"],
+    details: [
+      "Semestrální projekt zaměřený na elektronické prototypování — od breadboard zapojení přes programování v C++ až po návrh schématu a PCB v KiCad. Výstupem byl funkční IoT uzel pro monitoring teploty a vlhkosti.",
+      "Zařízení na bázi ESP32 komunikuje přes MQTT protokol s lokálním brokerem a zobrazuje data na OLED displeji. Projekt prošel fází breadboard prototypu, optimalizace spotřeby a závěrečného návrhu PCB s SMD součástkami.",
+    ],
+    gallery: [
+      {
+        gradient: "linear-gradient(135deg, #052e16 0%, #14532d 50%, #166534 100%)",
+        caption: "Breadboard prototyp — ESP32 s senzorem DHT22 a OLED",
+      },
+      {
+        gradient: "linear-gradient(135deg, #14532d 0%, #15803d 60%, #16a34a 100%)",
+        caption: "KiCad schéma PCB — finální revize s SMD součástkami",
+      },
+    ],
   },
 ]

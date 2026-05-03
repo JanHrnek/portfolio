@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import SmoothScrollProvider from "@/components/SmoothScroll"
-import ScrollProgress from "@/components/ScrollProgress"
+import ScrollToTop from "@/components/ScrollToTop"
 
 export const metadata: Metadata = {
   title: "Portfolio — Jan Hrnek",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="cs">
       <body className="antialiased">
-        <ScrollProgress />
+        <ScrollToTop />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>

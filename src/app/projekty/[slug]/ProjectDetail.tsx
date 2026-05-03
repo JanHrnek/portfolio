@@ -11,6 +11,7 @@ import {
   animate,
 } from "framer-motion"
 import Navbar from "@/components/Navbar"
+import ScrollProgress from "@/components/ScrollProgress"
 import { spring } from "@/lib/animation"
 import type { Project } from "@/data/projects"
 
@@ -100,6 +101,42 @@ function AnimatedStat({
           {stat.label}
         </p>
       </div>
+    </div>
+  )
+}
+
+// ── Spec row with hover ───────────────────────────────────────
+
+function SpecRow({
+  label,
+  value,
+  borderColor,
+  labelColor,
+  valueColor,
+  isDark,
+}: {
+  label: string
+  value: string
+  borderColor: string
+  labelColor: string
+  valueColor: string
+  isDark: boolean
+}) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      className="flex justify-between py-4 text-sm transition-colors duration-150"
+      style={{
+        borderBottom: `1px solid ${borderColor}`,
+        backgroundColor: hovered
+          ? isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)"
+          : "transparent",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <span style={{ color: labelColor }}>{label}</span>
+      <span style={{ color: valueColor }}>{value}</span>
     </div>
   )
 }
@@ -266,6 +303,7 @@ export default function ProjectDetail({
 
   return (
     <>
+      <ScrollProgress />
       <Navbar lightLinks={isDarkHero} />
 
       {/* ── 1. HERO ───────────────────────────────────────── */}
@@ -299,6 +337,9 @@ export default function ProjectDetail({
                 scale: isDesktop ? titleScale : 1,
                 opacity: titleOpacity,
                 transformOrigin: "left bottom",
+                textShadow: isDarkHero
+                  ? "0 1px 2px rgba(0,0,0,0.3)"
+                  : "0 1px 2px rgba(0,0,0,0.05)",
               }}
             >
               {project.title}
@@ -368,9 +409,21 @@ export default function ProjectDetail({
       </section>
 
       {/* ── 4. SPECS ─────────────────────────────────────── */}
+      {/* Gradient přechod ze světlé sekce do tmavé */}
+      {specsIsDark && (
+        <div
+          aria-hidden
+          style={{
+            height: 200,
+            background: `linear-gradient(to bottom, var(--color-bg), var(--color-dark-bg))`,
+            marginTop: 64,
+            pointerEvents: "none",
+          }}
+        />
+      )}
       <section
-        className="py-24 px-6 lg:px-16 mt-16"
-        style={{ backgroundColor: specs.bg }}
+        className="py-24 px-6 lg:px-16"
+        style={{ backgroundColor: specs.bg, marginTop: specsIsDark ? 0 : 64 }}
       >
         <div className="max-w-7xl mx-auto">
           <FadeIn>
@@ -385,14 +438,15 @@ export default function ProjectDetail({
                 </p>
                 <div>
                   {project.specs.map((spec, i) => (
-                    <div
+                    <SpecRow
                       key={i}
-                      className="flex justify-between py-4 text-sm"
-                      style={{ borderBottom: `1px solid ${specs.border}` }}
-                    >
-                      <span style={{ color: specs.label }}>{spec.label}</span>
-                      <span style={{ color: specs.value }}>{spec.value}</span>
-                    </div>
+                      label={spec.label}
+                      value={spec.value}
+                      borderColor={specs.border}
+                      labelColor={specs.label}
+                      valueColor={specs.value}
+                      isDark={specsIsDark}
+                    />
                   ))}
                 </div>
               </div>
@@ -438,21 +492,30 @@ export default function ProjectDetail({
             </div>
 
             {/* Challenges */}
-            <div className="space-y-16 lg:space-y-24">
+            <div className="space-y-6">
               {project.challenges.map((c, i) => (
                 <FadeInLeft key={i}>
-                  <h3
-                    className="font-heading font-medium text-xl mb-3"
-                    style={{ color: "var(--color-text)" }}
+                  <div
+                    className="transition-colors duration-200"
+                    style={{
+                      borderLeft: `3px solid ${accent}`,
+                      padding: "24px",
+                      backgroundColor: "rgba(0,0,0,0.015)",
+                    }}
                   >
-                    {c.title}
-                  </h3>
-                  <p
-                    className="text-base leading-[1.75]"
-                    style={{ color: "var(--color-muted)" }}
-                  >
-                    {c.description}
-                  </p>
+                    <h3
+                      className="font-heading font-medium text-xl mb-3"
+                      style={{ color: "var(--color-text)" }}
+                    >
+                      {c.title}
+                    </h3>
+                    <p
+                      className="text-base leading-[1.75]"
+                      style={{ color: "var(--color-muted)" }}
+                    >
+                      {c.description}
+                    </p>
+                  </div>
                 </FadeInLeft>
               ))}
             </div>
