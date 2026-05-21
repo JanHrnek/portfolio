@@ -206,6 +206,13 @@ export default function Home() {
             paddingTop: "5rem",
             paddingBottom: "4rem",
             backgroundColor: "var(--color-bg)",
+            backgroundImage: [
+              "linear-gradient(rgba(0,0,0,0.028) 1px, transparent 1px)",
+              "linear-gradient(90deg, rgba(0,0,0,0.028) 1px, transparent 1px)",
+              "linear-gradient(rgba(0,0,0,0.048) 1px, transparent 1px)",
+              "linear-gradient(90deg, rgba(0,0,0,0.048) 1px, transparent 1px)",
+            ].join(", "),
+            backgroundSize: "24px 24px, 24px 24px, 120px 120px, 120px 120px",
           }}
         >
           <div className="w-full px-6 lg:px-16">
@@ -371,7 +378,16 @@ export default function Home() {
         {/* ── ČÍSLA ─────────────────────────────────────────── */}
         <section
           className="py-24 px-6 lg:px-16"
-          style={{ backgroundColor: "var(--color-dark-bg)" }}
+          style={{
+            backgroundColor: "var(--color-dark-bg)",
+            backgroundImage: [
+              "linear-gradient(rgba(255,255,255,0.038) 1px, transparent 1px)",
+              "linear-gradient(90deg, rgba(255,255,255,0.038) 1px, transparent 1px)",
+              "linear-gradient(rgba(255,255,255,0.062) 1px, transparent 1px)",
+              "linear-gradient(90deg, rgba(255,255,255,0.062) 1px, transparent 1px)",
+            ].join(", "),
+            backgroundSize: "24px 24px, 24px 24px, 120px 120px, 120px 120px",
+          }}
         >
           <div className="max-w-7xl mx-auto">
             <p
