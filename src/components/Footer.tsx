@@ -49,21 +49,7 @@ export default function Footer() {
     <footer
       id="kontakt"
       className="relative px-6 lg:px-16 pt-16 pb-10"
-      style={{ borderTop: "1px solid var(--color-border)" }}
     >
-      {/* Gradient prechod shora */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          top: -80,
-          left: 0,
-          right: 0,
-          height: 80,
-          background: "linear-gradient(to bottom, transparent, var(--color-bg))",
-          pointerEvents: "none",
-        }}
-      />
 
       <div className="max-w-7xl mx-auto">
         {/* CTA */}
@@ -83,7 +69,7 @@ export default function Footer() {
             Pojďme si promluvit.
           </p>
           <a
-            href="mailto:jan@hrnek.dev"
+            href="mailto:jan.hrnek.05@gmail.com"
             className="inline-block font-heading font-medium transition-colors duration-200"
             style={{
               fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
@@ -92,7 +78,7 @@ export default function Footer() {
             onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
           >
-            jan@hrnek.dev →
+            jan.hrnek.05@gmail.com →
           </a>
         </div>
 
@@ -108,10 +94,10 @@ export default function Footer() {
             <SocialLink href="https://github.com" label="GitHub">
               <IconGitHub />
             </SocialLink>
-            <SocialLink href="https://linkedin.com" label="LinkedIn">
+            <SocialLink href="https://linkedin.com/in/jan-hrnek" label="LinkedIn">
               <IconLinkedIn />
             </SocialLink>
-            <SocialLink href="mailto:jan@hrnek.dev" label="Email">
+            <SocialLink href="mailto:jan.hrnek.05@gmail.com" label="Email">
               <Mail size={18} strokeWidth={1.5} />
             </SocialLink>
           </div>

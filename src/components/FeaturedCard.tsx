@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { spring } from "@/lib/animation"
+import IsoCube from "@/components/IsoCube"
 
 interface Props {
   index: number
@@ -77,12 +78,12 @@ export default function FeaturedCard({
           minHeight: size === "large" ? 280 : undefined,
         }}
       >
-        <motion.div
-          className={`absolute inset-0 ${gradientClass}`}
-          animate={{ scale: hovered ? 1.05 : 1 }}
-          transition={spring.gentle}
-          style={{ background: gradientStyle }}
-        />
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ backgroundColor: "var(--color-bg)" }}
+        >
+          <IsoCube />
+        </div>
 
         {/* Large project number */}
         <span
@@ -92,7 +93,7 @@ export default function FeaturedCard({
             fontSize: "clamp(4rem, 10vw, 5rem)",
             lineHeight: 1,
             letterSpacing: "-0.04em",
-            color: "rgba(255,255,255,0.06)",
+            color: "rgba(0,0,0,0.05)",
             position: "relative",
             zIndex: 1,
           }}

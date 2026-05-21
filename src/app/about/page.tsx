@@ -12,22 +12,36 @@ import { spring } from "@/lib/animation"
 const timeline = [
   {
     year: "2020",
-    title: "Nástup na VUT FSI Brno",
-    description: "Obor Konstrukční inženýrství — základ v mechanice, materiálech a CAD modelování.",
+    title: "Nástup na SPŠ Sokolská Brno",
+    description: "Obor Průmyslový Design — základ v technickém kreslení, navrhování a CAD modelování.",
+    upcoming: false,
+    photo: undefined as string | undefined,
+  },
+  {
+    year: "2022",
+    title: "Voith Turbo — první stáž",
+    description: "Dokumentace výrobního procesu a výkresy součástí v PTC Creo. První kontakt s průmyslovým prostředím.",
     upcoming: false,
     photo: undefined as string | undefined,
   },
   {
     year: "2023",
-    title: "CSWA & CSWP certifikace",
-    description: "SolidWorks certifikace na asociátské i profesionální úrovni. Začátek freelancingu v CAD oblasti.",
+    title: "Voith Turbo — druhá stáž",
+    description: "Návrh výstavní expozice a redesign krytu převodovky v SolidWorks.",
     upcoming: false,
     photo: undefined as string | undefined,
   },
   {
     year: "2024",
-    title: "Solidcon",
-    description: "Technická dokumentace, KLT inserty a paletový design. První průmyslový projekt pod časovým tlakem.",
+    title: "CSWA & CSWP certifikace",
+    description: "SolidWorks certifikace na asociátské i profesionální úrovni od Dassault Systèmes.",
+    upcoming: false,
+    photo: undefined as string | undefined,
+  },
+  {
+    year: "2024",
+    title: "Nástup na VUT FSI Brno",
+    description: "Obor Konstrukční inženýrství (Bc.) — mechanika, materiály, CAD a konstrukční praxe.",
     upcoming: false,
     photo: undefined as string | undefined,
   },
@@ -40,8 +54,8 @@ const timeline = [
   },
   {
     year: "2025",
-    title: "MediaMix",
-    description: "Komerční projekt — návrh formy pro polyuretanové výrobky a automatizovaný aplikátor separátoru.",
+    title: "MEDIA MIX & SolidCon",
+    description: "Souběžná práce na technických výkresech a 3D modelování pro dva průmyslové zákazníky.",
     upcoming: false,
     photo: undefined as string | undefined,
   },
@@ -55,14 +69,14 @@ const timeline = [
   {
     year: "2026",
     title: "Lemmacon s.r.o.",
-    description: "Automatizace výkaznictví, SolidWorks integrace, Excel/VBA systémy pro průmyslové prostředí.",
+    description: "3D modelování, technické výkresy a automatizace výkaznictví pro průmyslové prostředí.",
     upcoming: false,
     photo: undefined as string | undefined,
   },
   {
     year: "2026",
     title: "Erasmus+ SDU Odense",
-    description: "Plánovaný zimní semestr na University of Southern Denmark v Dánsku.",
+    description: "Příprava na výměnný pobyt na SDU Odense, Dánsko (podzim 2026).",
     upcoming: true,
     photo: undefined as string | undefined,
   },
@@ -78,19 +92,15 @@ const timeline = [
 const skillCategories = [
   {
     name: "CAD",
-    items: ["SolidWorks (CSWA + CSWP)", "Fusion 360", "Blender"],
+    items: ["SolidWorks (CSWA + CSWP)", "SolidWorks Visualize", "PTC Creo", "AutoCAD", "Autodesk Inventor", "Fusion 360"],
   },
   {
-    name: "Programování",
-    items: ["VBA / Excel", "Python", "Arduino / ESP32", "C++"],
+    name: "Kancelář",
+    items: ["Excel"],
   },
   {
-    name: "Výroba",
-    items: ["3D tisk (FDM)", "Základy CNC"],
-  },
-  {
-    name: "Ostatní",
-    items: ["Git", "LaTeX", "Technická dokumentace"],
+    name: "Jazyky",
+    items: ["Čeština (rodný jazyk)", "Angličtina (B2)"],
   },
 ]
 

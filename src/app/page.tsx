@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import { motion, useInView, useMotionValue, useMotionTemplate, useSpring, animate, useTransform } from "framer-motion"
 import { Compass, Settings, Box, Cpu } from "lucide-react"
 import Navbar from "@/components/Navbar"
@@ -8,8 +9,9 @@ import Footer from "@/components/Footer"
 import FeaturedCard from "@/components/FeaturedCard"
 import MagneticButton from "@/components/MagneticButton"
 import ParticleBackground from "@/components/ParticleBackground"
-import HeroCarousel from "@/components/HeroCarousel"
 import { spring } from "@/lib/animation"
+
+const HeroCarousel = dynamic(() => import("@/components/HeroCarousel"), { ssr: false })
 
 // ── Data ─────────────────────────────────────────────────────
 
@@ -385,6 +387,16 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Dark-to-light transition — standalone block so height is unconstrained */}
+        <div
+          aria-hidden
+          style={{
+            height: 220,
+            background: "linear-gradient(to bottom, var(--color-dark-bg), var(--color-bg))",
+            pointerEvents: "none",
+          }}
+        />
       </main>
 
       <Footer />

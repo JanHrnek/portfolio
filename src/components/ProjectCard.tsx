@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { spring } from "@/lib/animation"
+import IsoCube from "@/components/IsoCube"
 
 interface Props {
   title: string
@@ -37,12 +38,12 @@ export default function ProjectCard({ title, description, gradientClass, gradien
         className="relative overflow-hidden"
         style={{ aspectRatio: "4/3" }}
       >
-        <motion.div
-          className={`absolute inset-0 ${gradientClass ?? ""}`}
-          animate={{ scale: hovered ? 1.05 : 1 }}
-          transition={spring.gentle}
-          style={gradientStyle ? { background: gradientStyle } : undefined}
-        />
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ backgroundColor: "var(--color-bg)" }}
+        >
+          <IsoCube />
+        </div>
       </div>
       <div className="p-5" style={{ backgroundColor: "var(--color-surface)" }}>
         <h3 className="font-heading font-medium text-lg" style={{ color: "var(--color-text)" }}>

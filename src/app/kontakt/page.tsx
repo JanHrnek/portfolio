@@ -48,7 +48,7 @@ function SocialIcon({
 function EmailLink() {
   return (
     <motion.a
-      href="mailto:jan@hrnek.dev"
+      href="mailto:jan.hrnek.05@gmail.com"
       className="relative inline-block font-heading font-medium"
       initial="rest"
       whileHover="hover"
@@ -58,7 +58,7 @@ function EmailLink() {
       }}
       style={{ fontSize: "clamp(1.5rem, 4vw, 2.25rem)" }}
     >
-      jan@hrnek.dev
+      jan.hrnek.05@gmail.com
       <motion.span
         className="absolute left-0 bottom-0 h-[2px]"
         variants={{
@@ -126,7 +126,7 @@ export default function KontaktPage() {
             <SocialIcon href="https://github.com" label="GitHub">
               <IconGitHub />
             </SocialIcon>
-            <SocialIcon href="https://linkedin.com" label="LinkedIn">
+            <SocialIcon href="https://linkedin.com/in/jan-hrnek" label="LinkedIn">
               <IconLinkedIn />
             </SocialIcon>
           </div>

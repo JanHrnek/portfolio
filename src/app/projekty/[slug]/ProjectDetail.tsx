@@ -14,6 +14,7 @@ import Navbar from "@/components/Navbar"
 import ScrollProgress from "@/components/ScrollProgress"
 import { spring } from "@/lib/animation"
 import type { Project } from "@/data/projects"
+import IsoCube from "@/components/IsoCube"
 
 // ── Helpers ──────────────────────────────────────────────────
 
@@ -144,12 +145,10 @@ function SpecRow({
 // ── Parallax image ────────────────────────────────────────────
 
 function ParallaxImage({
-  gradient,
   caption,
   isDesktop,
   aspectRatio = "16 / 10",
 }: {
-  gradient: string
   caption: string
   isDesktop: boolean
   aspectRatio?: string
@@ -170,15 +169,20 @@ function ParallaxImage({
       >
         <motion.div
           style={{
-            background: gradient,
+            backgroundColor: "var(--color-bg)",
             position: "absolute",
             left: 0,
             right: 0,
             top: isDesktop ? -80 : 0,
             bottom: isDesktop ? -80 : 0,
             y: isDesktop ? rawY : "0px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <IsoCube />
+        </motion.div>
       </div>
       <motion.p
         ref={captionRef}
@@ -215,7 +219,6 @@ function Gallery2Col({
           }
         >
           <ParallaxImage
-            gradient={item.gradient}
             caption={item.caption}
             isDesktop={isDesktop}
           />
@@ -237,7 +240,6 @@ function GalleryHero2Col({
     <div className="space-y-4">
       {first && (
         <ParallaxImage
-          gradient={first.gradient}
           caption={first.caption}
           isDesktop={isDesktop}
           aspectRatio="21 / 9"
@@ -248,7 +250,6 @@ function GalleryHero2Col({
           {rest.map((item, i) => (
             <ParallaxImage
               key={i}
-              gradient={item.gradient}
               caption={item.caption}
               isDesktop={isDesktop}
             />

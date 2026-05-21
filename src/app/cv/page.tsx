@@ -10,62 +10,79 @@ export const metadata: Metadata = {
 
 const education = [
   {
-    period: "2020 – nyní",
-    institution: "VUT FSI Brno",
+    period: "2024 – nyní",
+    institution: "VUT Brno, FSI",
     degree: "Konstrukční inženýrství (Bc.)",
     note: "",
   },
   {
-    period: "2026",
-    institution: "SDU Odense, Dánsko",
-    degree: "Erasmus+",
-    note: "Plánovaný zimní semestr",
+    period: "2020 – 2024",
+    institution: "SPŠ a VOŠ Sokolská Brno",
+    degree: "Průmyslový Design",
+    note: "",
   },
 ]
 
 const experience = [
   {
-    year: "2026",
+    year: "2026 – nyní",
     company: "Lemmacon s.r.o.",
-    role: "Externí konzultant",
-    description: "Automatizace výkaznictví, SolidWorks integrace, Excel/VBA systémy.",
-  },
-  {
-    year: "2025",
-    company: "MediaMix",
     role: "CAD technik",
-    description: "Návrh formy pro polyuretanové výrobky, automatizovaný aplikátor separátoru.",
+    description: "3D modelování, technické výkresy, automatizace výkaznictví (SolidWorks, Fusion 360, Excel).",
   },
   {
-    year: "2024",
-    company: "Solidcon",
-    role: "Technický pracovník",
-    description: "Technická dokumentace, KLT inserty, paletový design.",
+    year: "2025 – nyní",
+    company: "MEDIA MIX s.r.o.",
+    role: "CAD technik",
+    description: "Technické výkresy, automatizace návrhu (SolidWorks, Fusion 360).",
+  },
+  {
+    year: "2025 – 2026",
+    company: "SolidCon s.r.o.",
+    role: "CAD technik",
+    description: "3D modelování, technická dokumentace (SolidWorks, Excel).",
+  },
+  {
+    year: "2024 – nyní",
+    company: "OSVČ",
+    role: "IČO: 22246894",
+    description: "Technický design a konzultace pro průmyslové zákazníky.",
+  },
+  {
+    year: "2024 – nyní",
+    company: "JM Klima s.r.o.",
+    role: "CAD technik",
+    description: "Technické výkresy pro VZT systémy (AutoCAD).",
   },
   {
     year: "2023",
     company: "Voith Turbo",
-    role: "Manufacturing Process Engineer",
-    description: "Stáž — optimalizace výrobních procesů, technická dokumentace.",
+    role: "Stážista",
+    description: "Návrh výstavní expozice, redesign krytu převodovky (SolidWorks).",
+  },
+  {
+    year: "2022",
+    company: "Voith Turbo",
+    role: "Stážista",
+    description: "Dokumentace výrobního procesu, výkresy součástí (PTC Creo).",
   },
 ]
 
 const certifications = [
   {
     code: "CSWP",
-    name: "Certified SolidWorks Professional",
+    name: "Certified SolidWorks Professional — Dassault Systèmes, 2024",
   },
   {
     code: "CSWA",
-    name: "Certified SolidWorks Associate",
+    name: "Certified SolidWorks Associate — Dassault Systèmes, 2024",
   },
 ]
 
 const skillGroups = [
-  { label: "CAD", items: ["SolidWorks", "Fusion 360", "Blender"] },
-  { label: "Programování", items: ["VBA / Excel", "Python", "Arduino / ESP32", "C++"] },
-  { label: "Výroba", items: ["3D tisk (FDM)", "Základy CNC"] },
-  { label: "Nástroje", items: ["Git", "LaTeX"] },
+  { label: "CAD", items: ["SolidWorks", "SolidWorks Visualize", "PTC Creo", "AutoCAD", "Autodesk Inventor", "Fusion 360"] },
+  { label: "Kancelář", items: ["Excel"] },
+  { label: "Jazyky", items: ["Čeština (rodný jazyk)", "Angličtina (B2)"] },
 ]
 
 // ── Components ───────────────────────────────────────────────
@@ -143,30 +160,30 @@ export default function CVPage() {
               style={{ color: "#6B6B6B" }}
             >
               <span>Brno, CZ</span>
+              <span>Narozen 02/2005</span>
+              <span>ŘP sk. B</span>
               <a
-                href="mailto:jan@hrnek.dev"
+                href="tel:+420602689340"
                 style={{ color: "#6B6B6B" }}
                 className="hover:underline"
               >
-                jan@hrnek.dev
+                +420 602 689 340
               </a>
               <a
-                href="https://linkedin.com/in/janhrnek"
+                href="mailto:jan.hrnek.05@gmail.com"
+                style={{ color: "#6B6B6B" }}
+                className="hover:underline"
+              >
+                jan.hrnek.05@gmail.com
+              </a>
+              <a
+                href="https://linkedin.com/in/jan-hrnek"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: "#6B6B6B" }}
                 className="hover:underline"
               >
                 LinkedIn
-              </a>
-              <a
-                href="https://github.com/janhrnek"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#6B6B6B" }}
-                className="hover:underline"
-              >
-                GitHub
               </a>
             </div>
           </header>

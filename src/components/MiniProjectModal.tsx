@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
 import type { MiniProject } from "@/data/projects"
+import IsoCube from "@/components/IsoCube"
 
 interface Props {
   project: MiniProject | null
@@ -130,22 +131,24 @@ export default function MiniProjectModal({ project, onClose }: Props) {
                       <div
                         key={i}
                         className="relative overflow-hidden"
-                        style={{ aspectRatio: "3/2", borderRadius: "2px" }}
+                        style={{ aspectRatio: "3/2", borderRadius: "2px", border: "1px solid var(--color-border)" }}
                       >
                         <div
-                          className="absolute inset-0"
-                          style={{ background: item.gradient }}
-                        />
+                          className="absolute inset-0 flex items-center justify-center"
+                          style={{ backgroundColor: "var(--color-bg)" }}
+                        >
+                          <IsoCube />
+                        </div>
                         <div
                           className="absolute bottom-0 left-0 right-0 px-3 py-2"
                           style={{
                             background:
-                              "linear-gradient(to top, rgba(0,0,0,0.52), transparent)",
+                              "linear-gradient(to top, rgba(255,255,255,0.9), transparent)",
                           }}
                         >
                           <p
                             style={{
-                              color: "rgba(255,255,255,0.75)",
+                              color: "var(--color-muted)",
                               fontSize: "0.62rem",
                               letterSpacing: "0.05em",
                               fontFamily: "var(--font-heading)",

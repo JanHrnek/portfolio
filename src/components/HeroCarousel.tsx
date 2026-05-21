@@ -13,14 +13,16 @@ const models = [
   { path: "/models/zp8-brake.glb",       name: "ZP8 Brake" },
 ]
 
-// Preload all models at module level so they're cached before any transition fires
-models.forEach(({ path }) => useGLTF.preload(path))
-
 const N = models.length
 
 export default function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+
+  // Preload all models once on mount — safe to call inside a client component
+  useEffect(() => {
+    models.forEach(({ path }) => useGLTF.preload(path))
+  }, [])
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
