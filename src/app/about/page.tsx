@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion"
 import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 import ScrollProgress from "@/components/ScrollProgress"
+import RadarChart from "@/components/RadarChart"
 import { spring } from "@/lib/animation"
 
 // ── Data ──────────────────────────────────────────────────────
@@ -389,28 +390,60 @@ export default function AboutPage() {
               </p>
             </FadeIn>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10">
-              {skillCategories.map((cat, ci) => (
-                <div key={cat.name}>
-                  <FadeIn delay={ci * 0.08}>
-                    <p
-                      className="text-xs uppercase tracking-[0.1em] mb-4 font-heading font-medium"
-                      style={{ color: "var(--color-subtle)" }}
-                    >
-                      {cat.name}
-                    </p>
-                  </FadeIn>
-                  <div className="space-y-2">
-                    {cat.items.map((skill, si) => (
-                      <SkillCard
-                        key={skill}
-                        skill={skill}
-                        delay={ci * 0.08 + si * 0.06}
-                      />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+              {/* Left — radar chart + planned certs */}
+              <FadeIn delay={0.05}>
+                <RadarChart />
+                <div className="mt-8">
+                  <p
+                    className="text-xs uppercase tracking-[0.1em] mb-3 font-heading"
+                    style={{ color: "var(--color-subtle)" }}
+                  >
+                    Plánované certifikace
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["CSWP-S — Sheet Metal", "CSWP-WD — Weldments", "CSWP-SD — Sustainable Design"].map((cert) => (
+                      <span
+                        key={cert}
+                        className="text-xs font-heading px-3 py-1.5"
+                        style={{
+                          border: "1px solid var(--color-border)",
+                          borderLeft: "2px solid var(--color-accent)",
+                          color: "var(--color-muted)",
+                          borderRadius: "2px",
+                        }}
+                      >
+                        {cert}
+                      </span>
                     ))}
                   </div>
                 </div>
-              ))}
+              </FadeIn>
+
+              {/* Right — skill category cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-10">
+                {skillCategories.map((cat, ci) => (
+                  <div key={cat.name}>
+                    <FadeIn delay={ci * 0.08}>
+                      <p
+                        className="text-xs uppercase tracking-[0.1em] mb-4 font-heading font-medium"
+                        style={{ color: "var(--color-subtle)" }}
+                      >
+                        {cat.name}
+                      </p>
+                    </FadeIn>
+                    <div className="space-y-2">
+                      {cat.items.map((skill, si) => (
+                        <SkillCard
+                          key={skill}
+                          skill={skill}
+                          delay={ci * 0.08 + si * 0.06}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
