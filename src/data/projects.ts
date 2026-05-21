@@ -11,6 +11,7 @@ export type MainProject = {
   heroTheme: "dark" | "light"
   accentColor: string
   galleryLayout: "2col" | "hero-2col"
+  datasheet: { label: string; value: string }[]
   caseStudy: {
     challenge: string[]
     solution: string[]
@@ -55,6 +56,13 @@ export const mainProjects: MainProject[] = [
     heroTheme: "dark",
     accentColor: "#D97706",
     galleryLayout: "2col",
+
+    datasheet: [
+      { label: "Software",  value: "SolidWorks · Storm32 BGC Configurator · PrusaSlicer" },
+      { label: "Materiál",  value: "PETG (tisknuté díly) · BLDC motory 3536/800KV · 3S LiPo 11.1V" },
+      { label: "Trvání",    value: "~4 měsíce · 2024" },
+      { label: "Role",      value: "Samostatný projekt — mechanický návrh, elektronika, firmware" },
+    ],
 
     caseStudy: {
       challenge: [
@@ -142,6 +150,14 @@ export const mainProjects: MainProject[] = [
     accentColor: "#0D9488",
     galleryLayout: "hero-2col",
 
+    datasheet: [
+      { label: "Software",  value: "SolidWorks · VS Code + ESP-IDF · KiCad" },
+      { label: "Materiál",  value: "Ocel (mechanika) · ESP32, MPU-6050, elektromagnet 24V · pružiny Sodemann" },
+      { label: "Trvání",    value: "12 týdnů · 2025" },
+      { label: "Tým",       value: "4 členové" },
+      { label: "Role",      value: "Mechanický návrh · firmware ESP32" },
+    ],
+
     caseStudy: {
       challenge: [
         "Navrhnout bezpečnostní brzdný systém výtahu, který při detekci pádu kabiny spolehlivě zastaví pohyb do definované vzdálenosti. Systém musí fungovat i při výpadku napájení — selhání elektriky nesmí znamenat selhání bezpečnosti.",
@@ -223,6 +239,13 @@ export const mainProjects: MainProject[] = [
     accentColor: "#16A34A",
     galleryLayout: "hero-2col",
 
+    datasheet: [
+      { label: "Software",  value: "SolidWorks · VS Code + ESP-IDF" },
+      { label: "Materiál",  value: "PETG (demonstrátor) · ocel (sloup)" },
+      { label: "Trvání",    value: "Bakalářská práce 2025/2026" },
+      { label: "Role",      value: "Autor — veškerý návrh a implementace" },
+    ],
+
     caseStudy: {
       challenge: [
         "Navrhnout halový volejbalový sloup s integrovaným mechanismem pro výškové nastavení a napínání sítě — celý pohonný systém ukrytý uvnitř sloupu, bez viditelné technologie nebo externích komponent. Klíčový požadavek: vizuální čistota nesmí být kompromisem.",
@@ -303,6 +326,13 @@ export const mainProjects: MainProject[] = [
     heroTheme: "dark",
     accentColor: "#8B5CF6",
     galleryLayout: "2col",
+
+    datasheet: [
+      { label: "Software",  value: "SolidWorks (3D model + 2D dokumentace)" },
+      { label: "Materiál",  value: "Ocel / hliník (forma) · polyuretan (výrobek)" },
+      { label: "Trvání",    value: "~6 týdnů · 2025" },
+      { label: "Role",      value: "CAD technik — návrh formy a automatizace separátoru" },
+    ],
 
     caseStudy: {
       challenge: [

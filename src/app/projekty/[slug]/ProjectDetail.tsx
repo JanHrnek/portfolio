@@ -365,7 +365,45 @@ export default function ProjectDetail({
         </div>
       </div>
 
-      {/* ── 2. CASE STUDY ────────────────────────────────── */}
+      {/* ── 2. DATASHEET ─────────────────────────────────── */}
+      <section className="px-6 lg:px-16 pt-16 pb-0">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <div style={{ border: "1px solid var(--color-border)" }}>
+              {project.datasheet.map((row, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-[110px_1fr] sm:grid-cols-[160px_1fr]"
+                  style={{
+                    borderBottom:
+                      i < project.datasheet.length - 1
+                        ? "1px solid var(--color-border)"
+                        : undefined,
+                  }}
+                >
+                  <div
+                    className="px-4 py-3.5 text-xs uppercase tracking-[0.1em] font-heading"
+                    style={{
+                      color: "var(--color-subtle)",
+                      borderRight: "1px solid var(--color-border)",
+                    }}
+                  >
+                    {row.label}
+                  </div>
+                  <div
+                    className="px-4 py-3.5 text-sm"
+                    style={{ color: "var(--color-text)", fontFamily: "var(--font-body)" }}
+                  >
+                    {row.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── 3. CASE STUDY ────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-16">
         <div className="max-w-7xl mx-auto space-y-20">
           {(
