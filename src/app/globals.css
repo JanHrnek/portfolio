@@ -114,7 +114,16 @@ h1, h2, h3, h4, h5, h6 {
 h1 { letter-spacing: -0.03em; }
 h2 { letter-spacing: -0.02em; }
 
-a, button { cursor: pointer; }
+/* Custom cursor replaces the default arrow site-wide.
+   Interactive elements keep their native cursors so the
+   crosshair hides itself and the browser cursor shows through. */
+html { cursor: none; }
+
+a, button, [role="button"], [role="link"], label, select { cursor: pointer; }
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
+textarea,
+[contenteditable="true"] { cursor: text; }
 
 /* ─── Selection ──────────────────────────────────────────── */
 ::selection {
