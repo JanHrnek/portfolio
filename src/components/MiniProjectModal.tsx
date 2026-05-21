@@ -105,18 +105,35 @@ export default function MiniProjectModal({ project, onClose }: Props) {
 
               {/* Body */}
               <div className="px-7 py-6">
-                {/* Details text */}
-                {project.details && project.details.length > 0 && (
-                  <div className="space-y-4 mb-8">
-                    {project.details.map((para, i) => (
-                      <p
-                        key={i}
-                        className="text-sm leading-relaxed"
-                        style={{ color: "var(--color-muted)" }}
-                      >
-                        {para}
-                      </p>
-                    ))}
+                {/* Case study */}
+                {project.caseStudy && (
+                  <div className="space-y-6 mb-8">
+                    {(
+                      [
+                        { key: "challenge", label: "Výzva" },
+                        { key: "solution", label: "Řešení" },
+                        { key: "result",    label: "Výsledek" },
+                      ] as const
+                    ).map(({ key, label }) => {
+                      const text = project.caseStudy![key]
+                      if (!text) return null
+                      return (
+                        <div key={key}>
+                          <p
+                            className="text-xs uppercase tracking-[0.1em] mb-2 font-heading"
+                            style={{ color: "var(--color-subtle)" }}
+                          >
+                            {label}
+                          </p>
+                          <p
+                            className="text-sm leading-relaxed"
+                            style={{ color: "var(--color-muted)" }}
+                          >
+                            {text}
+                          </p>
+                        </div>
+                      )
+                    })}
                   </div>
                 )}
 

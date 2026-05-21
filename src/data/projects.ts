@@ -11,7 +11,11 @@ export type MainProject = {
   heroTheme: "dark" | "light"
   accentColor: string
   galleryLayout: "2col" | "hero-2col"
-  overview: string[]
+  caseStudy: {
+    challenge: string[]
+    solution: string[]
+    result: string[]
+  }
   gallery: { gradient: string; caption: string }[]
   specs: { label: string; value: string }[]
   stats: { number: string; label: string }[]
@@ -25,7 +29,11 @@ export type MiniProject = {
   title: string
   description: string
   category: string
-  details?: string[]
+  caseStudy?: {
+    challenge: string
+    solution: string
+    result: string
+  }
   gallery?: { gradient: string; caption: string }[]
   tags?: string[]
 }
@@ -48,11 +56,20 @@ export const mainProjects: MainProject[] = [
     accentColor: "#D97706",
     galleryLayout: "2col",
 
-    overview: [
-      "AxisCore vznikl z jednoduché ambice: postavit plnohodnotný 3-osý kamerový stabilizátor vlastními silami. Ne kupovat hotový DJI, ale porozumět každé šroubce, každému kabelu, každému řádku firmware. Projekt kombinoval mechaniku, elektroniku a software v jednom celku.",
-      "Mechanická část vznikala iterativně — šest generací tisknutých dílů z PETG, každá s jiným řešením ložiskového uložení a vyvažování. BLDC motory ovládané Storm32 BGC kontrolerem poskytovaly teoreticky dostatečný točivý moment, ale vyvažování tří os simultánně se ukázalo jako zásadně obtížnější než výpočty naznačovaly.",
-      "Projekt nakonec skončil zkratováním řídící desky při ladění napájení — chyba s nevratným důsledkem. Žádný dramatický selhání systému, jen tichý konec smoke-testu. Ale právě tahle škola — návrh plošného spoje, ochrana napájení, práce s firmware Storm32 — stojí víc než jakýkoliv hotový produkt.",
-    ],
+    caseStudy: {
+      challenge: [
+        "Sestavit plnohodnotný 3-osý kamerový stabilizátor od nuly — bez hotového kitu, bez zkratky. Mechanika, elektronika a firmware v jednom projektu. Cílem nebylo koupit DJI, ale porozumět každé šroubce, každému kabelu, každému řádku kódu.",
+        "Vyvažování tří os simultánně se ukázalo jako zásadně obtížnější než výpočty naznačovaly. Statické vyvážení každé osy zvlášť nestačí — posunutí těžiště v jedné ose ovlivňuje zbývající dvě. Výběr BLDC motorů s dostatečným točivým momentem pro dynamické zatížení byl druhým klíčovým problémem.",
+      ],
+      solution: [
+        "Mechanická část vznikala iterativně — šest generací tisknutých dílů z PETG, každá s jiným řešením ložiskového uložení a vyvažování. BLDC motory (3536 / 800KV) ovládané Storm32 BGC kontrolerem prošly dvěma výměnami po analýze rezonancí ramen a dynamického zatížení.",
+        "ESP32 zajišťoval telemetrii. Každá změna geometrie ramen vyžadovala znovu nastavit PID smyčky Storm32 od nuly — konfigurace přes NTLogger je výkonná, ale iterativní bez jasného konce. Kalibrační jig s přidanými závažími umožnil postupné vyvažování všech tří os.",
+      ],
+      result: [
+        "Projekt skončil zkratováním řídící desky při ladění napájení — chybějící ochrana zpětnou polaritou a podcenění parazitní induktance kabeláže. Deska nepřežila. Žádný dramatický výbuch, jen tichý konec smoke-testu.",
+        "Ale právě tahle škola stojí víc než jakýkoliv úspěšně sestavený kit: návrh napájecích větví, ochrana před zkratem, práce s BLDC motory, Storm32 PID tuning, a pochopení toho, proč mechanické toleranky mají přímý dopad na firmware.",
+      ],
+    },
 
     gallery: [
       {
@@ -125,11 +142,20 @@ export const mainProjects: MainProject[] = [
     accentColor: "#0D9488",
     galleryLayout: "hero-2col",
 
-    overview: [
-      "ZP8 Elevator Brake je výsledkem týmového projektu (Team 02) v rámci předmětu ZP8 na VUT FSI. Cílem bylo navrhnout a realizovat funkční bezpečnostní brzdný systém výtahu — systém, který musí při detekci pádu spolehlivě zastavit kabinu do definované vzdálenosti.",
-      "Systém kombinuje aktivní elektromagnetickou brzdu s pasivní pružinovou zálohou. ESP32 mikrokontrolér přijímá data z MPU-6050 akcelerometru přes I2C a vyhodnocuje stav pádu. Komunikace mezi redundantními řídicími uzly probíhá přes ESP-NOW protokol bez závislosti na Wi-Fi infrastruktuře.",
-      "Projekt prošel dvěma formálními design review fázemi — PDR (Preliminary Design Review) a CDR (Critical Design Review) — s dokumentací v anglickém jazyce. Tým čítá čtyři členy a vývoj probíhal po dobu dvanácti týdnů od konceptu po funkční prototyp.",
-    ],
+    caseStudy: {
+      challenge: [
+        "Navrhnout bezpečnostní brzdný systém výtahu, který při detekci pádu kabiny spolehlivě zastaví pohyb do definované vzdálenosti. Systém musí fungovat i při výpadku napájení — selhání elektriky nesmí znamenat selhání bezpečnosti.",
+        "Projekt prošel dvěma formálními design review fázemi (PDR a CDR) s dokumentací v anglickém jazyce — akademický standard vyžadující obhájitelné konstrukční rozhodnutí na každém kroku.",
+      ],
+      solution: [
+        "Systém kombinuje aktivní elektromagnetickou brzdu (24V) s pasivní pružinovou zálohou Sodemann. ESP32 přijímá data z MPU-6050 akcelerometru přes I2C a vyhodnocuje stav pádu v reálném čase. Komunikace mezi redundantními řídicími uzly probíhá přes ESP-NOW protokol bez závislosti na Wi-Fi infrastruktuře.",
+        "PID smyčka řídí brzdnou sílu aktivní brzdy; hydraulický tlumič nárazů dimenzovaný dle normy EN 81-20 absorbuje zbytkovou kinetickou energii kabiny. Timing přechodu mezi aktivní a pasivní brzdou byl laděn osciloskopem — žádný okamžik bez brzdné síly.",
+      ],
+      result: [
+        "Funkční prototyp ověřený za dvanáct týdnů od konceptu. Tým čtyř členů předal kompletní technickou dokumentaci PDR a CDR v anglickém jazyce. Dimenzování pružin Sodemann a analýza hydraulického tlumiče prošly formálním review.",
+        "Projekt ukázal, jak norma EN 81-20 překládá bezpečnostní požadavky do konkrétních konstrukčních parametrů — a proč synchronizace aktivní a pasivní brzdy vyžaduje precizní firmware, ne jen správné mechanické dimenzování.",
+      ],
+    },
 
     gallery: [
       {
@@ -197,11 +223,20 @@ export const mainProjects: MainProject[] = [
     accentColor: "#16A34A",
     galleryLayout: "hero-2col",
 
-    overview: [
-      "Bakalářská práce se zaměřuje na návrh halového volejbalového sloupu s integrovaným mechanismem pro napínání a výškové nastavení sítě. Klíčovým požadavkem je kompaktnost — celý pohonný a převodový systém musí být ukryt uvnitř sloupu, aniž by narušil jeho vizuální čistotu nebo funkčnost.",
-      "Uvnitř sloupu je uložen pohybový šroub v kombinaci s převodovým mechanismem a elektrickým pohonem. Ovládání probíhá přes dotykový displej s přednastavenými výškovými presety dle FIVB norem — muži 243 cm, ženy 224 cm, mládež — a možností manuálního nastavení s milimetrovou přesností.",
-      "Výstupem práce bude plně funkční 3D tisknutý demonstrátor, který ověří kinematiku mechanismu, odezvu ovládání a odolnost vůči dynamickým nárazům míče do sítě. Projekt propojuje strojní návrh, elektronické řízení a uživatelské rozhraní do jednoho produktu.",
-    ],
+    caseStudy: {
+      challenge: [
+        "Navrhnout halový volejbalový sloup s integrovaným mechanismem pro výškové nastavení a napínání sítě — celý pohonný systém ukrytý uvnitř sloupu, bez viditelné technologie nebo externích komponent. Klíčový požadavek: vizuální čistota nesmí být kompromisem.",
+        "Systém musí být použitelný bez manuálu. Obsluha tělocvičny — ne technik — musí nastavit výšku sítě za méně než 30 vteřin na správnou FIVB výšku, bez nářadí a bez chybových stavů.",
+      ],
+      solution: [
+        "Uvnitř sloupu je uložen pohybový šroub v kombinaci s převodovkou a DC motorem s enkodérem. ESP32 řídí polohu s milimetrovou přesností; dotykový displej nabízí předdefinované výškové presety dle FIVB norem (muži 243 cm, ženy 224 cm, mládež) a možnost manuálního nastavení.",
+        "Analýza dynamického zatížení od nárazů míče do sítě podmínila volbu tlumicích prvků v pohybovém šroubu a převodovce. Každý milimetr průřezu sloupu byl předmětem rozhodnutí — kompromisy mezi výkonem, zástavbovými rozměry a servisní dostupností.",
+      ],
+      result: [
+        "Výstupem bakalářské práce je plně funkční 3D tisknutý demonstrátor ověřující kinematiku mechanismu, odezvu ovládání a odolnost vůči dynamickým nárazům míče do sítě.",
+        "Nastavení výšky sítě trvá méně než 30 sekund. Systém propojuje strojní návrh, elektronické řízení a UX displeje do jednoho produktu, kde žádná ze tří složek není jen doplněk.",
+      ],
+    },
 
     gallery: [
       {
@@ -269,10 +304,20 @@ export const mainProjects: MainProject[] = [
     accentColor: "#8B5CF6",
     galleryLayout: "2col",
 
-    overview: [
-      "Projekt pro firmu MediaMix zahrnoval kompletní návrh konceptu formy pro výrobu produktů z polyuretanu. Tvarová složitost výrobku neumožňovala použití standardních dělicích rovin — návrh formy vyžadoval analýzu úkosů, definici složených dělicích ploch a návrh vyhazovacího systému.",
-      "Součástí projektu byl návrh automatizovaného systému nanášení separátoru na tvarové plochy formy. Manuální aplikace separátoru je časově náročná, nerovnoměrná a při otevírání formy vytváří bezpečnostní rizika. Automatizace tohoto kroku zkracuje cyklus a eliminuje kontakt obsluhy s aktivními chemickými látkami.",
-    ],
+    caseStudy: {
+      challenge: [
+        "Geometrie polyuretanového výrobku neumožňuje standardní rovnou dělicí rovinu — návrh formy vyžadoval složenou víceúrovňovou dělicí plochu s přechody na různých výškových úrovních. Bez správné dělicí plochy výrobek z formy nevyjde.",
+        "Zároveň manuální nanášení separátoru bylo časově náročné, nerovnoměrné a při otevírání formy generovalo bezpečnostní rizika pro obsluhu. Automatizace tohoto kroku nebyla luxus — byla podmínkou opakovatelné kvality.",
+      ],
+      solution: [
+        "Kompletní 3D model formy v SolidWorks: analýza úkosů, definice složených dělicích ploch, kolíkový vyhazovací systém. Průchodnost pro vyjmutí výrobku ověřena v každé iteraci — celkem tři návrhy než geometrie sedla.",
+        "Paralelně byl navržen automatizovaný aplikátor separátoru — pohyblivá tryska s kinematicky definovanou trajektorií pokrývající všechny konkávní partie formy. Obsluha nezasahuje do procesu nanášení, chemický kontakt je eliminován.",
+      ],
+      result: [
+        "Kompletní technická dokumentace o 12 výkresech s kusovníkem předaná zákazníkovi. Tři iterace návrhu — každá s konkrétním zdůvodněním změny geometrie nebo vyhazovacího systému.",
+        "Automatizace nanášení separátoru zkracuje výrobní cyklus a eliminuje proměnlivost způsobenou manuální aplikací. Projekt ukázal, že u složitých PU forem je návrh dělicí plochy časově náročnější než samotný design výrobku.",
+      ],
+    },
 
     gallery: [
       {
@@ -332,10 +377,14 @@ export const miniProjects: MiniProject[] = [
     description: "Tvorba responzivních webů pomocí Hugo a Tailwind CSS",
     category: "ZPC / VUT",
     tags: ["Hugo", "Tailwind CSS", "HTML", "Responsive design"],
-    details: [
-      "V rámci předmětu ZPC na VUT FSI jsem absolvoval semestrální projekt zaměřený na moderní webový vývoj. Výstupem byl responzivní web postavený na statickém generátoru Hugo s Tailwind CSS stylováním.",
-      "Projekt zahrnoval návrh typografického systému, implementaci responzivního layoutu a optimalizaci výkonu pro produkční nasazení. Zaměřil jsem se na čistotu kódu a udržitelnost struktury šablon.",
-    ],
+    caseStudy: {
+      challenge:
+        "Navrhnout a implementovat plně responzivní web v rámci předmětu ZPC — s důrazem na moderní tooling, čistou strukturu šablon a produkční připravenost, ne jen na funkční výsledek.",
+      solution:
+        "Statický generátor Hugo s Tailwind CSS stylováním. Typografický systém, responzivní layout s breakpointy, optimalizace výkonu pro produkční nasazení. Čistota kódu a udržitelnost šablonové struktury jako primární kritéria.",
+      result:
+        "Funkční responzivní web deployovatelný jako statický site. Projekt ukázal, kde Hugo exceluje (rychlost buildu, jednoduchost šablon) a kde naráží na limity složitějšího UX.",
+    },
     gallery: [
       {
         gradient: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #334155 100%)",
@@ -354,10 +403,14 @@ export const miniProjects: MiniProject[] = [
     description: "Vektorová grafika a branding v Adobe Illustrator",
     category: "ZPC / VUT",
     tags: ["Adobe Illustrator", "Vektorová grafika", "Branding", "Typography"],
-    details: [
-      "Projekt se zaměřoval na tvorbu vektorové grafiky a základy brandingu v Adobe Illustrator. Výstupem bylo logo a vizuální identita fiktivní značky, včetně definice barevné palety a typografického systému.",
-      "Práce zahrnovala návrh piktogramů, grafiku pro tisk ve vysokém rozlišení a export do standardizovaných formátů (SVG, PDF, PNG). Důraz byl kladen na přenositelnost a škálovatelnost výsledné grafiky.",
-    ],
+    caseStudy: {
+      challenge:
+        "Vytvořit ucelenou vizuální identitu fiktivní značky od nuly — logo, barevná paleta, typografický systém a sada piktogramů. Vše musí fungovat v tisku i digitálně, ve velkém i malém měřítku.",
+      solution:
+        "Adobe Illustrator: vektorové logo ve třech variantách (barevná, černobílá, inverzní), definice brand guidelines, sada piktogramů konzistentní s charakterem značky. Export do SVG, PDF a PNG pro různé výstupní formáty.",
+      result:
+        "Kompletní brand package připravený pro tisk i digitální použití. Všechny výstupy škálovatelné bez ztráty kvality. Projekt ukázal, kde typografická rozhodnutí zásadně mění celkový charakter identity.",
+    },
     gallery: [
       {
         gradient: "linear-gradient(135deg, #2d1b69 0%, #4c1d95 50%, #6d28d9 100%)",
@@ -376,10 +429,14 @@ export const miniProjects: MiniProject[] = [
     description: "Návrh mechanických dílů ve Fusion 360, 3D tisk",
     category: "ZPC / VUT",
     tags: ["Fusion 360", "FDM tisk", "PETG", "Parametrický návrh"],
-    details: [
-      "Projekt kombinoval parametrický CAD návrh ve Fusion 360 s výrobou metodou FDM 3D tisku. Cílem bylo navrhnout a vytisknout funkční mechanický díl s tolerancemi umožňujícími smontování bez postprocessingu.",
-      "Postupoval jsem od skici a definice parametrů přes generování objemového modelu po přípravu G-kódu v PrusaSlicer. Materiál PETG byl zvolen pro kombinaci tuhosti, tepelné odolnosti a dobré tisknutelnosti.",
-    ],
+    caseStudy: {
+      challenge:
+        "Navrhnout a vytisknout funkční mechanický díl s tolerancemi umožňujícími smontování bez postprocessingu — přesnost jako primární kritérium, ne jen vzhled výtisku.",
+      solution:
+        "Parametrický CAD návrh ve Fusion 360 od skici přes objemový model po G-kód v PrusaSlicer. Materiál PETG zvolen pro kombinaci tuhosti, tepelné odolnosti a dobré tisknutelnosti. Tolerance navrženy s ohledem na FDM rozměrové odchylky.",
+      result:
+        "Díl smontován bez úprav hned na první výtisk. Kontrola rozměrů posuvným měřítkem potvrdila dodržení tolerancí. Projekt ukázal, jak FDM shrinkage a orientace tisku ovlivňují přesnost fit-u.",
+    },
     gallery: [
       {
         gradient: "linear-gradient(135deg, #1c1c1c 0%, #2a2a2a 50%, #3a3a3a 100%)",
@@ -398,10 +455,14 @@ export const miniProjects: MiniProject[] = [
     description: "Digitalizace objektů pomocí LiDAR a fotogrammetrie",
     category: "ZPC / VUT",
     tags: ["LiDAR", "Fotogrammetrie", "Meshroom", "Point cloud"],
-    details: [
-      "Projekt se zaměřoval na metody digitalizace fyzických objektů do 3D modelů. Vyzkoušel jsem dva přístupy: LiDAR skenování pro rychlý záběr prostoru a fotogrammetrii pro detailní rekonstrukci tvarů.",
-      "Pro fotogrammetrické zpracování byl použit software Meshroom (AliceVision) — pipeline zahrnoval pořízení sady překrývajících se fotografií, výpočet point cloudu a generování meshe. Výsledek byl exportován jako OBJ pro použití v CAD systémech.",
-    ],
+    caseStudy: {
+      challenge:
+        "Digitalizovat fyzický objekt do 3D modelu s dostatečnou přesností pro použití v CAD — a porovnat dva přístupy: LiDAR skenování pro rychlý záběr prostoru a fotogrammetrii pro detailní rekonstrukci tvarů.",
+      solution:
+        "LiDAR pro prostorový záběr, Meshroom (AliceVision) pro fotogrammetrické zpracování — pipeline zahrnoval sadu překrývajících se fotografií, výpočet point cloudu, generování meshe a export jako OBJ pro CAD. Obě metody srovnány pro přesnost a čas zpracování.",
+      result:
+        "Použitelný 3D mesh exportovatelný do CAD systémů. Fotogrammetrie vykázala vyšší detail povrchu, LiDAR rychlejší workflow pro větší objekty. Projekt objasnil praktické limity obou metod bez marketingových přehánění.",
+    },
     gallery: [
       {
         gradient: "linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0369a1 100%)",
@@ -420,10 +481,14 @@ export const miniProjects: MiniProject[] = [
     description: "Prototypování s mikrokontroléry, IoT, PCB návrh",
     category: "ZPC / VUT",
     tags: ["ESP32", "Arduino", "KiCad", "IoT", "C++"],
-    details: [
-      "Semestrální projekt zaměřený na elektronické prototypování — od breadboard zapojení přes programování v C++ až po návrh schématu a PCB v KiCad. Výstupem byl funkční IoT uzel pro monitoring teploty a vlhkosti.",
-      "Zařízení na bázi ESP32 komunikuje přes MQTT protokol s lokálním brokerem a zobrazuje data na OLED displeji. Projekt prošel fází breadboard prototypu, optimalizace spotřeby a závěrečného návrhu PCB s SMD součástkami.",
-    ],
+    caseStudy: {
+      challenge:
+        "Projít celým vývojovým cyklem elektronického produktu — od breadboard prototypu přes programování v C++ až po finální PCB návrh v KiCad. Výstupem musí být funkční IoT uzel, ne jen experimentální zapojení.",
+      solution:
+        "ESP32 s DHT22 senzorem komunikující přes MQTT s lokálním brokerem; data zobrazována na OLED displeji. Tři fáze: breadboard prototyp, optimalizace spotřeby firmware, návrh PCB se SMD součástkami v KiCad. Každá fáze s jasným akceptačním kritériem.",
+      result:
+        "Funkční IoT monitoring uzel pro teplotu a vlhkost — od breadboardu po PCB layout připravený k výrobě. Projekt ukázal, kde firmware optimalizace spotřeby vyžaduje jiná rozhodnutí než maximální výkon.",
+    },
     gallery: [
       {
         gradient: "linear-gradient(135deg, #052e16 0%, #14532d 50%, #166534 100%)",

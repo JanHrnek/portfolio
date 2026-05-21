@@ -365,28 +365,36 @@ export default function ProjectDetail({
         </div>
       </div>
 
-      {/* ── 2. OVERVIEW ──────────────────────────────────── */}
+      {/* ── 2. CASE STUDY ────────────────────────────────── */}
       <section className="py-24 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-24">
-            <FadeIn>
-              <p
-                className="text-xs uppercase tracking-[0.1em] mb-8 lg:mb-0 font-heading font-medium"
-                style={{ color: accent }}
-              >
-                Přehled
-              </p>
-            </FadeIn>
-            <div className="space-y-8">
-              {project.overview.map((para, i) => (
-                <FadeIn key={i} delay={i * 0.1}>
-                  <p className="text-lg leading-[1.75]" style={{ color: "var(--color-muted)" }}>
-                    {para}
-                  </p>
-                </FadeIn>
-              ))}
+        <div className="max-w-7xl mx-auto space-y-20">
+          {(
+            [
+              { label: "Výzva", paras: project.caseStudy.challenge },
+              { label: "Řešení", paras: project.caseStudy.solution },
+              { label: "Výsledek", paras: project.caseStudy.result },
+            ] as const
+          ).map((phase, pi) => (
+            <div key={pi} className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-24">
+              <FadeIn>
+                <p
+                  className="text-xs uppercase tracking-[0.1em] mb-8 lg:mb-0 font-heading font-medium"
+                  style={{ color: accent }}
+                >
+                  {phase.label}
+                </p>
+              </FadeIn>
+              <div className="space-y-6">
+                {phase.paras.map((para, i) => (
+                  <FadeIn key={i} delay={i * 0.08}>
+                    <p className="text-lg leading-[1.75]" style={{ color: "var(--color-muted)" }}>
+                      {para}
+                    </p>
+                  </FadeIn>
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
