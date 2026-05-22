@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import {
   motion,
   useScroll,
@@ -12,6 +13,7 @@ import {
 } from "framer-motion"
 import Navbar from "@/components/Navbar"
 import ScrollProgress from "@/components/ScrollProgress"
+import AxisCoreScrollViewer from "@/components/AxisCoreScrollViewer"
 import { spring } from "@/lib/animation"
 import type { Project } from "@/data/projects"
 import IsoCube from "@/components/IsoCube"
@@ -146,10 +148,12 @@ function SpecRow({
 
 function ParallaxImage({
   caption,
+  image,
   isDesktop,
   aspectRatio = "16 / 10",
 }: {
   caption: string
+  image?: string
   isDesktop: boolean
   aspectRatio?: string
 }) {
@@ -169,19 +173,33 @@ function ParallaxImage({
       >
         <motion.div
           style={{
-            backgroundColor: "var(--color-bg)",
             position: "absolute",
             left: 0,
             right: 0,
             top: isDesktop ? -80 : 0,
             bottom: isDesktop ? -80 : 0,
             y: isDesktop ? rawY : "0px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            ...(image
+              ? {}
+              : {
+                  backgroundColor: "var(--color-bg)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }),
           }}
         >
-          <IsoCube />
+          {image ? (
+            <Image
+              src={image}
+              alt={caption}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <IsoCube />
+          )}
         </motion.div>
       </div>
       <motion.p
@@ -220,6 +238,7 @@ function Gallery2Col({
         >
           <ParallaxImage
             caption={item.caption}
+            image={item.image}
             isDesktop={isDesktop}
           />
         </div>
@@ -241,6 +260,7 @@ function GalleryHero2Col({
       {first && (
         <ParallaxImage
           caption={first.caption}
+          image={first.image}
           isDesktop={isDesktop}
           aspectRatio="21 / 9"
         />
@@ -251,6 +271,7 @@ function GalleryHero2Col({
             <ParallaxImage
               key={i}
               caption={item.caption}
+              image={item.image}
               isDesktop={isDesktop}
             />
           ))}
@@ -408,10 +429,13 @@ export default function ProjectDetail({
         <div className="max-w-7xl mx-auto space-y-20">
           {(
             [
-              { label: "Výzva", paras: project.caseStudy.challenge },
-              { label: "Řešení", paras: project.caseStudy.solution },
+              { label: "Výzva",    paras: project.caseStudy.challenge },
+              { label: "Řešení",   paras: project.caseStudy.solution },
               { label: "Výsledek", paras: project.caseStudy.result },
-            ] as const
+              ...(project.caseStudy.v2
+                ? [{ label: "V2 — Plánováno", paras: project.caseStudy.v2 }]
+                : []),
+            ]
           ).map((phase, pi) => (
             <div key={pi} className="lg:grid lg:grid-cols-[200px_1fr] lg:gap-24">
               <FadeIn>
@@ -454,6 +478,11 @@ export default function ProjectDetail({
           )}
         </div>
       </section>
+
+      {/* ── 3.5 INTERACTIVE MODEL (AxisCore only) ────────── */}
+      {project.slug === "axiscore" && (
+        <AxisCoreScrollViewer accent={accent} />
+      )}
 
       {/* ── 4. SPECS ─────────────────────────────────────── */}
       {/* Gradient přechod ze světlé sekce do tmavé */}

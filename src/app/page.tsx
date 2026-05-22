@@ -36,6 +36,7 @@ const featured = [
     gradientClass: "bg-gradient-to-br from-emerald-100 to-green-200",
     accentColor: "#16A34A",
     href: "/projekty/bakalarka-volejbal",
+    inProgress: true,
   },
 ]
 
@@ -206,13 +207,6 @@ export default function Home() {
             paddingTop: "5rem",
             paddingBottom: "4rem",
             backgroundColor: "var(--color-bg)",
-            backgroundImage: [
-              "linear-gradient(rgba(0,0,0,0.028) 1px, transparent 1px)",
-              "linear-gradient(90deg, rgba(0,0,0,0.028) 1px, transparent 1px)",
-              "linear-gradient(rgba(0,0,0,0.048) 1px, transparent 1px)",
-              "linear-gradient(90deg, rgba(0,0,0,0.048) 1px, transparent 1px)",
-            ].join(", "),
-            backgroundSize: "24px 24px, 24px 24px, 120px 120px, 120px 120px",
           }}
         >
           <div className="w-full px-6 lg:px-16">

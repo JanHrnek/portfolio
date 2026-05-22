@@ -11,13 +11,15 @@ export type MainProject = {
   heroTheme: "dark" | "light"
   accentColor: string
   galleryLayout: "2col" | "hero-2col"
+  inProgress?: boolean
   datasheet: { label: string; value: string }[]
   caseStudy: {
     challenge: string[]
     solution: string[]
     result: string[]
+    v2?: string[]
   }
-  gallery: { gradient: string; caption: string }[]
+  gallery: { gradient: string; caption: string; image?: string }[]
   specs: { label: string; value: string }[]
   stats: { number: string; label: string }[]
   challenges: { title: string; description: string }[]
@@ -35,7 +37,7 @@ export type MiniProject = {
     solution: string
     result: string
   }
-  gallery?: { gradient: string; caption: string }[]
+  gallery?: { gradient: string; caption: string; image?: string }[]
   tags?: string[]
 }
 
@@ -58,80 +60,76 @@ export const mainProjects: MainProject[] = [
     galleryLayout: "2col",
 
     datasheet: [
-      { label: "Software",  value: "SolidWorks · Storm32 BGC Configurator · PrusaSlicer" },
-      { label: "Materiál",  value: "PETG (tisknuté díly) · BLDC motory 3536/800KV · 3S LiPo 11.1V" },
-      { label: "Trvání",    value: "~4 měsíce · 2024" },
-      { label: "Role",      value: "Samostatný projekt — mechanický návrh, elektronika, firmware" },
+      { label: "Software",  value: "SolidWorks · PrusaSlicer · Arduino IDE" },
+      { label: "Materiál",  value: "PETG (tisknuté díly) · MagSafe mount" },
+      { label: "Trvání",    value: "~3 měsíce · 2024" },
+      { label: "Role",      value: "Školní projekt — mechanický návrh, elektronika, firmware" },
     ],
 
     caseStudy: {
       challenge: [
-        "Sestavit plnohodnotný 3-osý kamerový stabilizátor od nuly — bez hotového kitu, bez zkratky. Mechanika, elektronika a firmware v jednom projektu. Cílem nebylo koupit DJI, ale porozumět každé šroubce, každému kabelu, každému řádku kódu.",
-        "Vyvažování tří os simultánně se ukázalo jako zásadně obtížnější než výpočty naznačovaly. Statické vyvážení každé osy zvlášť nestačí — posunutí těžiště v jedné ose ovlivňuje zbývající dvě. Výběr BLDC motorů s dostatečným točivým momentem pro dynamické zatížení byl druhým klíčovým problémem.",
+        "Navrhnout a sestavit 3osý kamerový stabilizátor pro telefon od nuly jako školní projekt. Bez hotového kitu — mechanika, elektronika i firmware v jednom. Cílem bylo real-time vyvažování přes PID s MagSafe mountem pro univerzální uchycení telefonu.",
       ],
       solution: [
-        "Mechanická část vznikala iterativně — šest generací tisknutých dílů z PETG, každá s jiným řešením ložiskového uložení a vyvažování. BLDC motory (3536 / 800KV) ovládané Storm32 BGC kontrolerem prošly dvěma výměnami po analýze rezonancí ramen a dynamického zatížení.",
-        "ESP32 zajišťoval telemetrii. Každá změna geometrie ramen vyžadovala znovu nastavit PID smyčky Storm32 od nuly — konfigurace přes NTLogger je výkonná, ale iterativní bez jasného konce. Kalibrační jig s přidanými závažími umožnil postupné vyvažování všech tří os.",
+        "Konstrukce vznikala iterativně — všechny díly tisknuté z PETG. Původní koncept s BLDC motory a Storm32 BGC kontrolerem skončil spálením dvou desek. Komplexita Storm32 byla v daném čase nezvladatelná — pivot na Arduino Nano se servomotory znamenal zjednodušení a ztrátu jedné osy.",
       ],
       result: [
-        "Projekt skončil zkratováním řídící desky při ladění napájení — chybějící ochrana zpětnou polaritou a podcenění parazitní induktance kabeláže. Deska nepřežila. Žádný dramatický výbuch, jen tichý konec smoke-testu.",
-        "Ale právě tahle škola stojí víc než jakýkoliv úspěšně sestavený kit: návrh napájecích větví, ochrana před zkratem, práce s BLDC motory, Storm32 PID tuning, a pochopení toho, proč mechanické toleranky mají přímý dopad na firmware.",
+        "Projekt byl dokončen a odevzdán, ale ne jako skutečný gimbal. Platforma se ovládá joystickem a tlačítky — bez gyroskopu, bez PID. Real-time vyvažování zůstalo cílem, ne realitou. Největší výstup: pochopení proč Storm32 a BLDC nejsou správný první krok.",
+      ],
+      v2: [
+        "Projekt bude přepracován — silnější servomotory, skutečný real-time PID vyvažování přes gyroskop a plynulejší ovládání nahradí joystick.",
       ],
     },
 
     gallery: [
       {
         gradient: "linear-gradient(160deg, #2a2a2a 0%, #1a1a2e 100%)",
+        image: "/images/axiscore/prot-3.png",
         caption: "Třetí generace ramen — přechod z PLA na PETG pro lepší teplotní odolnost",
       },
       {
         gradient: "linear-gradient(135deg, #1c1c1c 0%, #333 60%, #222 100%)",
+        image: "/images/axiscore/body-top-1.jpg",
         caption: "Storm32 BGC kontroler s vlastním napájecím rozvodem — před incident",
       },
       {
         gradient: "linear-gradient(160deg, #111 0%, #2a2020 100%)",
+        image: "/images/axiscore/prot-1.png",
         caption: "Finální sestavení s BLDC motory — vyvážení pitch osy",
       },
     ],
 
     specs: [
-      { label: "Počet os stabilizace", value: "3 (Pan / Tilt / Roll)" },
-      { label: "Materiál mechaniky", value: "PETG (tisknuté, 6 iterací)" },
-      { label: "Motory", value: "BLDC, 3536 / 800KV" },
-      { label: "Kontroler", value: "Storm32 BGC v1.31" },
-      { label: "Mikrokontrolér", value: "ESP32 (telemetrie)" },
-      { label: "Hmotnost sestavení", value: "850 g" },
-      { label: "Napájení", value: "3S LiPo, 11.1V" },
-      { label: "Iterace prototypu", value: "6 generací" },
+      { label: "Počet os stabilizace", value: "2 (Pan / Tilt)" },
+      { label: "Materiál mechaniky",   value: "PETG (tisknuté, více iterací)" },
+      { label: "Motory",               value: "Servomotory" },
+      { label: "Kontroler",            value: "Arduino Nano" },
+      { label: "MagSafe mount",        value: "Ano" },
+      { label: "Iterace prototypu",    value: "6 generací" },
     ],
 
     stats: [
-      { number: "850", label: "gramů celková hmotnost" },
-      { number: "3", label: "osy stabilizace" },
+      { number: "2", label: "osy stabilizace" },
       { number: "6", label: "iterací prototypu" },
-      { number: "47", label: "tisknutých dílů" },
+      { number: "více", label: "tisknutých dílů" },
+      { number: "1", label: "týden — finální pivot" },
     ],
 
     challenges: [
       {
-        title: "Vyvažování tří os simultánně",
+        title: "Storm32 a BLDC — příliš komplexní",
         description:
-          "Statické vyvážení každé osy zvlášť nestačí — posunutí těžiště v jedné ose ovlivňuje zbývající dvě. Iterativní proces s váhami a kalibračním jigem nakonec přinesl výsledek, ale zabral týdny ladění, které nikdo v tutoriálech nezmiňuje.",
+          "Původní koncept s BLDC motory a Storm32 BGC kontrolerem skončil spálením dvou desek. Konfigurace a PID tuning byl v rámci školního projektu nezvladatelný.",
       },
       {
-        title: "Výběr motorů a momentu",
+        title: "Pivot na Arduino a servomotory",
         description:
-          "Výpočet potřebného točivého momentu BLDC motorů na papíře vypadal jednoduše. Realita zahrnovala dynamické zatížení při rychlých pohybech kamery a rezonance ramen, které žádný statický výpočet nepodchytí. Motory prošly dvěma výměnami.",
+          "Přechod na Arduino Nano se servomotory znamenal ztrátu jedné osy. Týden do odevzdání nedovolil nic jiného.",
       },
       {
-        title: "Firmware Storm32 BGC",
+        title: "Gyroskop nestihnut",
         description:
-          "Storm32 je výkonný, ale jeho konfigurace skrze NTLogger a specifický PID tuning pro danou mechaniku je iterativní proces bez jasného konce. Každá změna geometrie ramen vyžadovala znovu nastavit PID smyčky od nuly.",
-      },
-      {
-        title: "Zničení řídící desky",
-        description:
-          "Zkrat při testování napájecí větve byl výsledkem chybějící ochrany zpětnou polaritou a podcenění parazitní induktance kabeláže. Deska nepřežila. Projekt skončil, ale naučila mě víc o návrhu napájení než jakýkoliv kurz.",
+          "Real-time vyvažování přes gyroskop a PID zůstalo cílem. Výsledný gimbal se ovládá joystickem a tlačítky — funkční, ale ne autonomní.",
       },
     ],
 
@@ -238,6 +236,7 @@ export const mainProjects: MainProject[] = [
     heroTheme: "light",
     accentColor: "#16A34A",
     galleryLayout: "hero-2col",
+    inProgress: true,
 
     datasheet: [
       { label: "Software",  value: "SolidWorks · VS Code + ESP-IDF" },
@@ -312,7 +311,7 @@ export const mainProjects: MainProject[] = [
       },
     ],
 
-    nextProjectSlug: "mediamix-forma",
+    nextProjectSlug: "solar-carport",
   },
 
   {
@@ -393,6 +392,29 @@ export const mainProjects: MainProject[] = [
       },
     ],
 
+    nextProjectSlug: "solar-carport",
+  },
+
+  {
+    type: "main",
+    slug: "solar-carport",
+    title: "Solar Carport System",
+    subtitle: "Návrh fotovoltaického přístřešku pro automobil",
+    year: "2026",
+    category: "Konstrukční projekt",
+    heroGradient: "linear-gradient(135deg, #1a1400 0%, #2d2200 50%, #111000 100%)",
+    heroTheme: "dark",
+    accentColor: "#F59E0B",
+    galleryLayout: "2col",
+    inProgress: true,
+
+    datasheet: [],
+    caseStudy: { challenge: [], solution: [], result: [] },
+    gallery: [],
+    specs: [],
+    stats: [],
+    challenges: [],
+
     nextProjectSlug: "axiscore",
   },
 ]
@@ -418,10 +440,12 @@ export const miniProjects: MiniProject[] = [
     gallery: [
       {
         gradient: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #334155 100%)",
+        image: "/images/mini-projects/Coding.png",
         caption: "Hlavní strana — hero sekce a navigace",
       },
       {
         gradient: "linear-gradient(135deg, #1e293b 0%, #334155 60%, #475569 100%)",
+        image: "/images/mini-projects/Bento-grid.png",
         caption: "Mobilní responzivní layout",
       },
     ],
@@ -444,10 +468,12 @@ export const miniProjects: MiniProject[] = [
     gallery: [
       {
         gradient: "linear-gradient(135deg, #2d1b69 0%, #4c1d95 50%, #6d28d9 100%)",
+        image: "/images/mini-projects/proces-loga.jpg",
         caption: "Logo a vizuální identita — základní variace",
       },
       {
         gradient: "linear-gradient(135deg, #4c1d95 0%, #5b21b6 60%, #7c3aed 100%)",
+        image: "/images/mini-projects/vuzite-logo.jpg",
         caption: "Sada piktogramů a ikonografika",
       },
     ],
@@ -470,10 +496,12 @@ export const miniProjects: MiniProject[] = [
     gallery: [
       {
         gradient: "linear-gradient(135deg, #1c1c1c 0%, #2a2a2a 50%, #3a3a3a 100%)",
+        image: "/images/mini-projects/3D.png",
         caption: "Fusion 360 — parametrický model s ložiskovou dírou",
       },
       {
         gradient: "linear-gradient(135deg, #292524 0%, #44403c 60%, #57534e 100%)",
+        image: "/images/mini-projects/Dissasambled.jpg",
         caption: "Vytisknutý díl — kontrola rozměrů posuvným měřítkem",
       },
     ],
@@ -496,10 +524,12 @@ export const miniProjects: MiniProject[] = [
     gallery: [
       {
         gradient: "linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0369a1 100%)",
+        image: "/images/mini-projects/Sken1.jpg",
         caption: "Point cloud — vizualizace naskenovaného objektu",
       },
       {
         gradient: "linear-gradient(135deg, #0369a1 0%, #0284c7 60%, #0ea5e9 100%)",
+        image: "/images/mini-projects/Sken_join.jpg",
         caption: "Photogrammetry mesh po rekonstrukci v Meshroom",
       },
     ],
@@ -522,10 +552,12 @@ export const miniProjects: MiniProject[] = [
     gallery: [
       {
         gradient: "linear-gradient(135deg, #052e16 0%, #14532d 50%, #166534 100%)",
+        image: "/images/mini-projects/Obvod.png",
         caption: "Breadboard prototyp — ESP32 s senzorem DHT22 a OLED",
       },
       {
         gradient: "linear-gradient(135deg, #14532d 0%, #15803d 60%, #16a34a 100%)",
+        image: "/images/mini-projects/PCB.png",
         caption: "KiCad schéma PCB — finální revize s SMD součástkami",
       },
     ],

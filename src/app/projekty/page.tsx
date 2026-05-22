@@ -85,6 +85,7 @@ export default function ProjektyPage() {
                     description={p.subtitle}
                     gradientStyle={p.heroGradient}
                     href={`/projekty/${p.slug}`}
+                    inProgress={p.inProgress}
                   />
                 </motion.div>
               ))}

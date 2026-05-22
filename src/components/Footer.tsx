@@ -44,7 +44,7 @@ function SocialLink({
   )
 }
 
-export default function Footer() {
+export default function Footer({ hideCta = false }: { hideCta?: boolean }) {
   return (
     <footer
       id="kontakt"
@@ -53,34 +53,36 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto">
         {/* CTA */}
-        <div className="mb-12">
-          <p
-            className="text-xs uppercase tracking-[0.1em] mb-4 font-heading"
-            style={{ color: "var(--color-subtle)" }}
-          >
-            Spolupráce
-          </p>
-          <p
-            className="font-heading font-bold mb-4"
-            style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "var(--color-text)", lineHeight: 1.15 }}
-          >
-            Máte projekt?
-            <br />
-            Pojďme si promluvit.
-          </p>
-          <a
-            href="mailto:jan.hrnek.05@gmail.com"
-            className="inline-block font-heading font-medium transition-colors duration-200"
-            style={{
-              fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
-              color: "var(--color-accent)",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
-          >
-            jan.hrnek.05@gmail.com →
-          </a>
-        </div>
+        {!hideCta && (
+          <div className="mb-12">
+            <p
+              className="text-xs uppercase tracking-[0.1em] mb-4 font-heading"
+              style={{ color: "var(--color-subtle)" }}
+            >
+              Spolupráce
+            </p>
+            <p
+              className="font-heading font-bold mb-4"
+              style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "var(--color-text)", lineHeight: 1.15 }}
+            >
+              Máte projekt?
+              <br />
+              Pojďme si promluvit.
+            </p>
+            <a
+              href="mailto:jan.hrnek.05@gmail.com"
+              className="inline-block font-heading font-medium transition-colors duration-200"
+              style={{
+                fontSize: "clamp(1rem, 2.5vw, 1.5rem)",
+                color: "var(--color-accent)",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-text)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
+            >
+              jan.hrnek.05@gmail.com →
+            </a>
+          </div>
+        )}
 
         {/* Bottom row */}
         <div
@@ -91,7 +93,7 @@ export default function Footer() {
             © 2026 Jan Hrnek
           </p>
           <div className="flex items-center gap-5">
-            <SocialLink href="https://github.com" label="GitHub">
+            <SocialLink href="https://github.com/JanHrnek" label="GitHub">
               <IconGitHub />
             </SocialLink>
             <SocialLink href="https://linkedin.com/in/jan-hrnek" label="LinkedIn">

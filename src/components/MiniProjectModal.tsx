@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
+import Image from "next/image"
 import type { MiniProject } from "@/data/projects"
 import IsoCube from "@/components/IsoCube"
 
@@ -150,12 +151,22 @@ export default function MiniProjectModal({ project, onClose }: Props) {
                         className="relative overflow-hidden"
                         style={{ aspectRatio: "3/2", borderRadius: "2px", border: "1px solid var(--color-border)" }}
                       >
-                        <div
-                          className="absolute inset-0 flex items-center justify-center"
-                          style={{ backgroundColor: "var(--color-bg)" }}
-                        >
-                          <IsoCube />
-                        </div>
+                          {item.image ? (
+                          <Image
+                            src={item.image}
+                            alt={item.caption}
+                            fill
+                            sizes="290px"
+                            style={{ objectFit: "cover" }}
+                          />
+                        ) : (
+                          <div
+                            className="absolute inset-0 flex items-center justify-center"
+                            style={{ backgroundColor: "var(--color-bg)" }}
+                          >
+                            <IsoCube />
+                          </div>
+                        )}
                         <div
                           className="absolute bottom-0 left-0 right-0 px-3 py-2"
                           style={{

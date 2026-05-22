@@ -15,6 +15,7 @@ interface Props {
   accentColor?: string
   href?: string
   size?: "large" | "small"
+  inProgress?: boolean
 }
 
 export default function FeaturedCard({
@@ -26,6 +27,7 @@ export default function FeaturedCard({
   accentColor = "var(--color-accent)",
   href,
   size = "small",
+  inProgress,
 }: Props) {
   const [hovered, setHovered] = useState(false)
 
@@ -122,13 +124,27 @@ export default function FeaturedCard({
 
       {/* Text */}
       <div className="p-5" style={{ backgroundColor: "var(--color-surface)" }}>
-        <h3
-          className="font-heading font-medium text-lg"
-          style={{ color: "var(--color-text)" }}
-        >
-          {title}
-        </h3>
-        <p className="text-sm mt-1 leading-relaxed" style={{ color: "var(--color-muted)" }}>
+        <div className="flex items-center gap-2.5 flex-wrap mb-1">
+          <h3
+            className="font-heading font-medium text-lg"
+            style={{ color: "var(--color-text)" }}
+          >
+            {title}
+          </h3>
+          {inProgress && (
+            <span
+              className="text-xs font-heading px-2 py-0.5 shrink-0"
+              style={{
+                border: "1px solid var(--color-accent)",
+                color: "var(--color-accent)",
+                borderRadius: "2px",
+              }}
+            >
+              In Progress
+            </span>
+          )}
+        </div>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
           {description}
         </p>
       </div>

@@ -123,7 +123,7 @@ export default function KontaktPage() {
 
           {/* Social icons */}
           <div className="flex items-center gap-6">
-            <SocialIcon href="https://github.com" label="GitHub">
+            <SocialIcon href="https://github.com/JanHrnek" label="GitHub">
               <IconGitHub />
             </SocialIcon>
             <SocialIcon href="https://linkedin.com/in/jan-hrnek" label="LinkedIn">
@@ -133,7 +133,7 @@ export default function KontaktPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer hideCta />
     </motion.div>
   )
 }
