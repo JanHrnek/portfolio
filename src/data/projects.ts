@@ -23,6 +23,21 @@ export type MainProject = {
   specs: { label: string; value: string }[]
   stats: { number: string; label: string }[]
   challenges: { title: string; description: string }[]
+  designJourney?: {
+    title: string
+    subtitle: string
+    image?: string
+    shortDesc: string
+    fullDesc: string
+  }[]
+  componentBreakdown?: {
+    title: string
+    category: string
+    weight: string
+    material: string
+    description: string
+    image?: string
+  }[]
   nextProjectSlug: string
 }
 
@@ -133,6 +148,70 @@ export const mainProjects: MainProject[] = [
       },
     ],
 
+    designJourney: [
+      {
+        title: "Počáteční návrh",
+        subtitle: "Hledání optimálního tvaru",
+        shortDesc: "Hledání optimálního tvaru pro rozložení hmotnosti a ergonomii.",
+        fullDesc: "První skici byly hrubé, ale stanovily základní L-tvarovanou nosnou strukturu typickou pro jednoruční gimbaly. Cílem bylo minimalizovat šroubové spoje a vytvořit co nejjednodušší mechanické sestavení. Rané návrhy byly příliš složité — nakonec zvítězila jednoduchost nad originalitou."
+      },
+      {
+        title: "Vývoj konceptu",
+        subtitle: "Vývoj převodového ústrojí",
+        shortDesc: "Detailní řešení upevnění motorů bez vůle.",
+        fullDesc: "Tohle byl největší technický oříšek — přenos točivého momentu motoru na ramena bez jakékoli vůle. Nakonec jsem zvolil přímý pohon pro Pitch a Roll osy a řemenový pohon pro Yaw osu. Každé ložisko je přesně umístěno pro minimální tření. Šest CAD iterací jen pro tuto část."
+      },
+      {
+        title: "Finální design",
+        subtitle: "Estetické dotažení",
+        shortDesc: "Finální iterace s integrovaným displejem a joystickem.",
+        fullDesc: "Poslední verze AxisCore. Obsahuje integrovaný displej v rukojeti a joystick pro ovládání kamery. Červené akcenty označují klíčové pohyblivé díly a zajišťovací mechanismy pro vyvažování kamery. Design prošel dalšími iteracemi pro zlepšení ergonomie — tvar rukojeti, poloha palce na joysticku, celková bilance hmotnosti."
+      }
+    ],
+    componentBreakdown: [
+      {
+        title: "Hlavní tělo (Body Top)",
+        category: "STRUKTURA",
+        weight: "145g",
+        material: "PETG",
+        description: "Horní část hlavního rámu gimbalu slouží jako centrální montážní hub pro kritickou elektroniku. Tento díl nese nejvyšší mechanické zatížení a obsahuje montážní body pro všechny tři osy. Struktura využívá topologickou optimalizaci — materiál je umístěn jen tam, kde je skutečně potřeba."
+      },
+      {
+        title: "Spodní kryt (Body Bottom)",
+        category: "STRUKTURA",
+        weight: "98g",
+        material: "PETG",
+        description: "Spodní část slouží primárně jako rychle přístupný prostor pro baterii. Design prioritizuje snadnou výměnu baterie bez nástrojů — klíčové pro terénní práci při potřebě rychlé výměny zdroje energie."
+      },
+      {
+        title: "Rameno Y+X osy",
+        category: "MECHANIKA",
+        weight: "82g",
+        material: "PETG",
+        description: "Kritický dvouosý komponent zodpovědný za rotaci gimbalu a naklánění kamery. Musí být extrémně tuhý, přesto lehký — každý extra gram znamená vyšší zatížení motoru. Asymetrický design umožňuje vyvážení kamery během sekund bez nástrojů."
+      },
+      {
+        title: "Rameno Z osy",
+        category: "MECHANIKA",
+        weight: "75g",
+        material: "PETG",
+        description: "Vertikální rameno zajišťuje roll osu — udržuje telefon v rovině a umožňuje rotaci na výšku/šířku. Design minimalizuje moment setrvačnosti pro rychlejší stabilizační odezvu."
+      },
+      {
+        title: "Řídicí deska (Storm32 BGC)",
+        category: "ELEKTRONIKA",
+        weight: "35g",
+        material: "FR4 + SMD",
+        description: "Mozek celého systému — 32bit STM32 procesor, smyčka PID na 1000Hz, MPU6050 IMU senzor s přesností 0.01°. Spálil jsem první kus špatným napětím. Druhý funguje perfektně."
+      },
+      {
+        title: "Joystick",
+        category: "OVLÁDÁNÍ",
+        weight: "12g",
+        material: "ABS",
+        description: "Analogový joystick pro manuální polohování kamery. Používá Hall-effect senzor bez mechanického opotřebení. Ergonomicky umístěn přesně tam, kde palec přirozeně spočívá."
+      }
+    ],
     nextProjectSlug: "zp8-elevator-brake",
   },
 

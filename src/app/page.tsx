@@ -201,78 +201,198 @@ export default function Home() {
         {/* ── HERO ──────────────────────────────────────────── */}
         <section
           id="hero"
-          className="relative flex items-center"
+          className="relative flex flex-col items-center justify-center overflow-hidden"
           style={{
-            minHeight: "88vh",
-            paddingTop: "5rem",
-            paddingBottom: "4rem",
+            minHeight: "100vh",
             backgroundColor: "var(--color-bg)",
           }}
         >
-          <div className="w-full px-6 lg:px-16">
-            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+          {/* Giant watermark text */}
+          <div
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+            style={{ zIndex: 0 }}
+          >
+            <span
+              className="font-heading font-bold text-center leading-none"
+              style={{
+                fontSize: "clamp(6rem, 15vw, 14rem)",
+                color: "var(--color-text)",
+                opacity: 0.04,
+                letterSpacing: "-0.04em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              DESIGN ENGINEER
+            </span>
+          </div>
 
-              {/* LEFT — text */}
-              <div className="flex-1 flex flex-col justify-center order-2 lg:order-1">
+          {/* Mobile layout: stacked */}
+          <div className="flex flex-col items-center gap-8 px-6 pt-28 pb-16 lg:hidden" style={{ zIndex: 1, width: "100%" }}>
+            <div className="text-center">
+              <h1
+                className="font-heading font-bold leading-[1.05] tracking-[-0.03em] mb-3"
+                style={{ fontSize: "clamp(2.8rem, 10vw, 4rem)", color: "var(--color-text)" }}
+              >
+                <AnimatedName name="Jan Hrnek" />
+              </h1>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: 100 }}
+                transition={{ delay: 0.65, type: "spring", stiffness: 100, damping: 20 }}
+                style={{
+                  height: 2,
+                  backgroundColor: "var(--color-accent)",
+                  margin: "0 auto 1rem",
+                }}
+              />
+              <p className="text-lg font-heading mb-4" style={{ color: "var(--color-muted)", minHeight: "1.6rem" }}>
+                <Typewriter text="Design Engineer" startDelay={0.55} />
+              </p>
+              <motion.p
+                className="text-sm leading-[1.65] mb-6"
+                style={{ color: "var(--color-muted)" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 0.5 }}
+              >
+                Student konstrukčního inženýrství na VUT FSI Brno.
+                CAD, automatizace, DIY projekty.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.7, ...spring.gentle }}
+              >
+                <MagneticButton onClick={() => scrollTo("projekty")}>
+                  Prohlédnout projekty
+                </MagneticButton>
+              </motion.div>
+            </div>
+            <HeroCarousel />
+          </div>
+
+          {/* Desktop layout: centered carousel + floating cards */}
+          <div
+            className="hidden lg:flex items-center justify-center relative w-full"
+            style={{ zIndex: 1, minHeight: "100vh" }}
+          >
+            {/* Centered 3D carousel */}
+            <motion.div
+              className="flex justify-center items-center"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, ...spring.gentle }}
+              style={{ width: "50%" }}
+            >
+              <HeroCarousel />
+            </motion.div>
+
+            {/* LEFT floating glassmorphism card */}
+            <motion.div
+              className="absolute"
+              style={{ left: "4%", top: "35%" }}
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, ...spring.gentle }}
+            >
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.60)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  border: "1px solid rgba(0,0,0,0.08)",
+                  borderRadius: "1rem",
+                  padding: "1.5rem",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+                  maxWidth: 260,
+                }}
+              >
                 <h1
-                  className="font-heading font-bold leading-[1.05] tracking-[-0.03em] mb-4"
-                  style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "var(--color-text)" }}
+                  className="font-heading font-bold leading-tight tracking-[-0.03em] mb-2"
+                  style={{ fontSize: "clamp(1.6rem, 2.5vw, 2rem)", color: "var(--color-text)" }}
                 >
                   <AnimatedName name="Jan Hrnek" />
                 </h1>
-
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: 140 }}
+                  animate={{ width: 80 }}
                   transition={{ delay: 0.65, type: "spring", stiffness: 100, damping: 20 }}
                   style={{
                     height: 2,
                     backgroundColor: "var(--color-accent)",
-                    marginBottom: "1.5rem",
+                    marginBottom: "0.75rem",
                   }}
                 />
-
-                <p
-                  className="text-xl font-heading mb-6"
-                  style={{ color: "var(--color-muted)", minHeight: "1.75rem" }}
-                >
-                  <Typewriter text="Design Engineer" startDelay={0.55} />
+                <p className="text-sm font-heading mb-3" style={{ color: "var(--color-muted)", minHeight: "1.3rem" }}>
+                  <Typewriter text="Design Engineer" startDelay={0.8} />
                 </p>
-
                 <motion.p
-                  className="text-base leading-[1.65] mb-10"
-                  style={{ color: "var(--color-muted)", maxWidth: 340 }}
+                  className="text-xs leading-[1.65] mb-4"
+                  style={{ color: "var(--color-muted)" }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1.5, duration: 0.5 }}
+                  transition={{ delay: 1.6, duration: 0.5 }}
                 >
                   Student konstrukčního inženýrství na VUT FSI Brno.
-                  <br />
                   CAD, automatizace, DIY projekty.
                 </motion.p>
-
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.7, ...spring.gentle }}
+                  transition={{ delay: 1.8, ...spring.gentle }}
                 >
                   <MagneticButton onClick={() => scrollTo("projekty")}>
                     Prohlédnout projekty
                   </MagneticButton>
                 </motion.div>
               </div>
+            </motion.div>
 
-              {/* RIGHT — 3D model carousel */}
-              <motion.div
-                className="flex-1 flex justify-center items-center order-1 lg:order-2"
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, ...spring.gentle }}
+            {/* RIGHT floating glassmorphism card */}
+            <motion.div
+              className="absolute"
+              style={{ right: "4%", top: "50%" }}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8, ...spring.gentle }}
+            >
+              <div
+                style={{
+                  background: "rgba(255,255,255,0.60)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  border: "1px solid rgba(0,0,0,0.08)",
+                  borderRadius: "1rem",
+                  padding: "1.5rem",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.08)",
+                  maxWidth: 220,
+                }}
               >
-                <HeroCarousel />
-              </motion.div>
-
-            </div>
+                <p
+                  className="text-xs uppercase tracking-[0.1em] mb-3 font-heading font-medium"
+                  style={{ color: "var(--color-subtle)" }}
+                >
+                  Co dělám
+                </p>
+                <div className="flex flex-col gap-2">
+                  {whatIDo.map((item) => (
+                    <span
+                      key={item.title}
+                      className="text-xs font-heading font-medium px-2.5 py-1.5 inline-block"
+                      style={{
+                        backgroundColor: "rgba(0,0,0,0.04)",
+                        border: "1px solid rgba(0,0,0,0.07)",
+                        color: "var(--color-text)",
+                        borderRadius: "0.25rem",
+                      }}
+                    >
+                      {item.title}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 

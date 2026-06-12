@@ -14,6 +14,8 @@ import {
 import Navbar from "@/components/Navbar"
 import ScrollProgress from "@/components/ScrollProgress"
 import AxisCoreScrollViewer from "@/components/AxisCoreScrollViewer"
+import DesignJourneyCards from "@/components/DesignJourneyCards"
+import ComponentBreakdown from "@/components/ComponentBreakdown"
 import { spring } from "@/lib/animation"
 import type { Project } from "@/data/projects"
 import IsoCube from "@/components/IsoCube"
@@ -599,7 +601,17 @@ export default function ProjectDetail({
         </div>
       </section>
 
-      {/* ── 6. NEXT PROJECT ──────────────────────────────── */}
+      {/* ── 6. DESIGN JOURNEY ────────────────────────────── */}
+      {project.designJourney && project.designJourney.length > 0 && (
+        <DesignJourneyCards cards={project.designJourney} accent={accent} />
+      )}
+
+      {/* ── 7. COMPONENT BREAKDOWN ───────────────────────── */}
+      {project.componentBreakdown && project.componentBreakdown.length > 0 && (
+        <ComponentBreakdown components={project.componentBreakdown} accent={accent} />
+      )}
+
+      {/* ── 8. NEXT PROJECT ──────────────────────────────── */}
       <section
         className="py-16 px-6 lg:px-16"
         style={{ borderTop: "1px solid var(--color-border)" }}
