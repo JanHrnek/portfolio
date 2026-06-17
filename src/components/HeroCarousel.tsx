@@ -7,10 +7,10 @@ import { useGLTF } from "@react-three/drei"
 
 // All .glb files from public/models/ — names derived from filenames
 const models = [
-  { path: "/models/axiscore-gimbal.glb", name: "AxisCore" },
-  { path: "/models/mediamix-forma.glb",  name: "MediaMix Forma" },
-  { path: "/models/pc-case.glb",         name: "PC Case" },
-  { path: "/models/carport.glb",         name: "Carport" },
+  { path: "/models/axiscore.glb", name: "AxisCore" },
+  { path: "/models/forma.glb",    name: "MediaMix Forma" },
+  { path: "/models/pc-case.glb",  name: "PC Case" },
+  { path: "/models/carport.glb",  name: "Carport" },
 ]
 
 const N = models.length

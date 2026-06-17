@@ -159,6 +159,39 @@ function StatCounter({ value, suffix, label }: { value: string; suffix: string; 
   )
 }
 
+// "Co dělám" card with hover effect
+function WhatIDoCard({ item, delay }: { item: (typeof whatIDo)[0]; delay: number }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-60px" })
+  const [hovered, setHovered] = useState(false)
+  const Icon = item.icon
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay, ...spring.gentle }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="py-6 px-6 transition-colors duration-200"
+      style={{
+        border: `1px solid ${hovered ? "var(--color-accent)" : "var(--color-border)"}`,
+        borderRadius: "0.5rem",
+        backgroundColor: hovered ? "rgba(0,0,0,0.02)" : "transparent",
+      }}
+    >
+      <Icon size={22} strokeWidth={1.5} style={{ color: "var(--color-accent)", marginBottom: "1rem" }} />
+      <h3 className="font-heading font-medium text-base mb-2" style={{ color: "var(--color-text)" }}>
+        {item.title}
+      </h3>
+      <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
+        {item.desc}
+      </p>
+    </motion.div>
+  )
+}
+
 // Subtle cursor glow — soft radial spotlight following the mouse
 function CursorGlow() {
   const mouseX = useMotionValue(-1000)
@@ -403,41 +436,17 @@ export default function Home() {
               className="text-xs uppercase tracking-[0.1em] mb-12"
               style={{ color: "var(--color-subtle)" }}
               initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, ...spring.gentle }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ ...spring.gentle }}
             >
               Co dělám
             </motion.p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {whatIDo.map((item, i) => {
-                const Icon = item.icon
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15 + i * 0.1, ...spring.gentle }}
-                    className="py-6 px-6"
-                    style={{ border: "1px solid var(--color-border)" }}
-                  >
-                    <Icon
-                      size={22}
-                      strokeWidth={1.5}
-                      style={{ color: "var(--color-accent)", marginBottom: "1rem" }}
-                    />
-                    <h3
-                      className="font-heading font-medium text-base mb-2"
-                      style={{ color: "var(--color-text)" }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                      {item.desc}
-                    </p>
-                  </motion.div>
-                )
-              })}
+              {whatIDo.map((item, i) => (
+                <WhatIDoCard key={item.title} item={item} delay={i * 0.08} />
+              ))}
             </div>
           </div>
         </section>

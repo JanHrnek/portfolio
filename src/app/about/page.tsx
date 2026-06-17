@@ -265,6 +265,28 @@ function SkillCard({ skill, delay }: { skill: string; delay: number }) {
   )
 }
 
+// ── Hobby tag ────────────────────────────────────────────────
+
+function HobbyTag({ text }: { text: string }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <span
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="py-2.5 px-5 text-sm font-heading transition-colors duration-200"
+      style={{
+        border: `1px solid ${hovered ? "var(--color-accent)" : "var(--color-border)"}`,
+        color: "var(--color-text)",
+        borderRadius: "0.5rem",
+        backgroundColor: hovered ? "rgba(0,0,0,0.02)" : "transparent",
+        cursor: "default",
+      }}
+    >
+      {text}
+    </span>
+  )
+}
+
 // ── Page ──────────────────────────────────────────────────────
 
 export default function AboutPage() {
@@ -315,7 +337,7 @@ export default function AboutPage() {
             <FadeIn>
               <div
                 className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 px-8 py-10 lg:px-12"
-                style={{ backgroundColor: "var(--color-dark-bg)", borderRadius: "4px" }}
+                style={{ backgroundColor: "var(--color-dark-bg)", borderRadius: "0.5rem" }}
               >
                 {/* Left */}
                 <div>
@@ -488,16 +510,7 @@ export default function AboutPage() {
                 </h2>
                 <div className="flex flex-wrap gap-3">
                   {hobbies.map((h) => (
-                    <span
-                      key={h}
-                      className="py-2.5 px-5 text-sm font-heading"
-                      style={{
-                        border: "1px solid var(--color-border)",
-                        color: "var(--color-text)",
-                      }}
-                    >
-                      {h}
-                    </span>
+                    <HobbyTag key={h} text={h} />
                   ))}
                 </div>
               </FadeIn>
