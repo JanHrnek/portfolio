@@ -7,10 +7,9 @@ import { useGLTF } from "@react-three/drei"
 
 // All .glb files from public/models/ — names derived from filenames
 const models = [
+  { path: "/models/axiscore-gimbal.glb", name: "AxisCore" },
   { path: "/models/mediamix-forma.glb",  name: "MediaMix Forma" },
-  { path: "/models/axiscore-gimbal.glb", name: "AxisCore Gimbal" },
   { path: "/models/pc-case.glb",         name: "PC Case" },
-  { path: "/models/zp8-brake.glb",       name: "ZP8 Brake" },
   { path: "/models/carport.glb",         name: "Carport" },
 ]
 
