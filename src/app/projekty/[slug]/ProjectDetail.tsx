@@ -14,6 +14,7 @@ import {
 import Navbar from "@/components/Navbar"
 import ScrollProgress from "@/components/ScrollProgress"
 import AxisCoreScrollViewer from "@/components/AxisCoreScrollViewer"
+import ScrollVideo from "@/components/ScrollVideo"
 import DesignJourneyCards from "@/components/DesignJourneyCards"
 import ComponentBreakdown from "@/components/ComponentBreakdown"
 import { spring } from "@/lib/animation"
@@ -481,9 +482,18 @@ export default function ProjectDetail({
         </div>
       </section>
 
-      {/* ── 3.5 INTERACTIVE MODEL (AxisCore only) ────────── */}
-      {project.slug === "axiscore" && (
-        <AxisCoreScrollViewer accent={accent} />
+      {/* ── 3.5 SCROLL-SCRUBBED VIDEO / INTERACTIVE MODEL ── */}
+      {project.scrollVideo ? (
+        <ScrollVideo
+          src={project.scrollVideo.src}
+          poster={project.scrollVideo.poster}
+          title={project.scrollVideo.title}
+          caption={project.scrollVideo.caption}
+          scrollHeight={project.scrollVideo.scrollHeight}
+          accent={accent}
+        />
+      ) : (
+        project.slug === "axiscore" && <AxisCoreScrollViewer accent={accent} />
       )}
 
       {/* ── 4. SPECS ─────────────────────────────────────── */}

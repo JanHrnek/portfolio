@@ -38,6 +38,13 @@ export type MainProject = {
     description: string
     image?: string
   }[]
+  scrollVideo?: {
+    src: string
+    poster?: string
+    title?: string
+    caption?: string
+    scrollHeight?: number
+  }
   nextProjectSlug: string
 }
 
