@@ -333,18 +333,33 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                {/* Button */}
-                <a
-                  href="/cv"
-                  className="inline-flex items-center gap-3 px-8 py-4 font-heading font-medium text-sm tracking-wide shrink-0 transition-opacity duration-200 hover:opacity-85"
-                  style={{
-                    backgroundColor: "var(--color-accent)",
-                    color: "var(--color-dark-bg)",
-                  }}
-                >
-                  Zobrazit CV
-                  <span aria-hidden>→</span>
-                </a>
+                {/* Buttons */}
+                <div className="flex flex-col gap-3 shrink-0">
+                  <a
+                    href="/cv"
+                    className="inline-flex items-center gap-3 px-8 py-4 font-heading font-medium text-sm tracking-wide transition-opacity duration-200 hover:opacity-85"
+                    style={{
+                      backgroundColor: "var(--color-accent)",
+                      color: "var(--color-dark-bg)",
+                      borderRadius: "0.5rem",
+                    }}
+                  >
+                    Zobrazit CV
+                    <span aria-hidden>→</span>
+                  </a>
+                  <a
+                    href="/jak-pracuji"
+                    className="inline-flex items-center gap-3 px-8 py-4 font-heading font-medium text-sm tracking-wide transition-opacity duration-200 hover:opacity-85"
+                    style={{
+                      backgroundColor: "var(--color-accent)",
+                      color: "var(--color-dark-bg)",
+                      borderRadius: "0.5rem",
+                    }}
+                  >
+                    Jak pracuji
+                    <span aria-hidden>→</span>
+                  </a>
+                </div>
               </div>
             </FadeIn>
           </div>

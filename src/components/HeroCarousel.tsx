@@ -9,8 +9,9 @@ import { useGLTF } from "@react-three/drei"
 const models = [
   { path: "/models/mediamix-forma.glb",  name: "MediaMix Forma" },
   { path: "/models/axiscore-gimbal.glb", name: "AxisCore Gimbal" },
-  { path: "/models/volejbal-system.glb", name: "Volejbal System" },
+  { path: "/models/pc-case.glb",         name: "PC Case" },
   { path: "/models/zp8-brake.glb",       name: "ZP8 Brake" },
+  { path: "/models/carport.glb",         name: "Carport" },
 ]
 
 const N = models.length
